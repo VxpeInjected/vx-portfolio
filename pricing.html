@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VxpeInjected • Pricing</title>
-<link rel="icon" type="image/png" href="/favicon.png">
+<title>VxpeInjected — Pricing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -17,6 +16,8 @@
     --gray: #1a1a1a;
     --gray2: #2a2a2a;
     --text-muted: #666;
+    --robux: #00B06F;
+    --robux-dim: #00B06F22;
   }
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -109,8 +110,7 @@
 
   /* ─── PAGE HEADER ─── */
   .page-header {
-    padding: 180px 48px 80px;
-    position: relative; overflow: hidden;
+    padding: 180px 48px 80px; position: relative; overflow: hidden;
     border-bottom: 1px solid var(--gray2);
   }
   .page-header::before {
@@ -118,8 +118,7 @@
     height: 1px; background: linear-gradient(90deg, var(--orange), transparent);
   }
   .header-bg-text {
-    position: absolute; right: -20px; top: 50%;
-    transform: translateY(-50%);
+    position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
     font-family: 'Bebas Neue', sans-serif; font-size: 260px;
     color: transparent; -webkit-text-stroke: 1px var(--gray2);
     pointer-events: none; letter-spacing: -8px; user-select: none;
@@ -142,167 +141,193 @@
     opacity: 0; animation: fade-up 0.8s ease 0.7s forwards;
   }
 
-  /* ─── TOGGLE ─── */
-  .toggle-wrap {
-    padding: 48px;
+  /* ─── CONTROLS BAR ─── */
+  .controls-bar {
+    padding: 40px 48px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 16px;
+    justify-content: space-between;
     border-bottom: 1px solid var(--gray2);
+    background: var(--gray);
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  /* Period toggle */
+  .toggle-group {
+    display: flex; align-items: center; gap: 16px;
   }
   .toggle-label {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted);
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--text-muted); transition: color 0.3s ease;
   }
   .toggle-label.active { color: var(--orange); }
   .toggle {
-    width: 56px; height: 28px;
-    background: var(--gray2);
-    border-radius: 14px;
-    position: relative;
-    cursor: pointer;
-    border: 1px solid var(--gray2);
-    transition: background 0.3s ease;
+    width: 56px; height: 28px; background: var(--gray2);
+    border-radius: 14px; position: relative; cursor: pointer;
+    border: 1px solid var(--gray2); transition: all 0.3s ease;
   }
   .toggle.on { background: var(--orange-dim); border-color: var(--orange); }
   .toggle::before {
-    content: '';
-    position: absolute;
-    width: 20px; height: 20px;
-    background: var(--text-muted);
-    border-radius: 50%;
-    top: 3px; left: 4px;
-    transition: all 0.3s ease;
+    content: ''; position: absolute;
+    width: 20px; height: 20px; background: var(--text-muted);
+    border-radius: 50%; top: 3px; left: 4px; transition: all 0.3s ease;
   }
   .toggle.on::before { left: 32px; background: var(--orange); }
   .save-badge {
     font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
-    background: var(--orange); color: var(--black); padding: 3px 8px;
-    font-weight: 700;
+    background: var(--orange); color: var(--black); padding: 4px 10px;
+    font-weight: 700; white-space: nowrap;
   }
 
-  /* ─── PRICING GRID ─── */
+  /* Currency switcher */
+  .currency-switcher {
+    display: flex; gap: 2px;
+  }
+  .currency-btn {
+    padding: 10px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    border: 1px solid var(--gray2); background: transparent;
+    color: var(--text-muted); cursor: pointer; transition: all 0.3s ease;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .currency-btn:first-child {
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  }
+  .currency-btn:last-child {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+  .currency-btn.active {
+    background: var(--orange-dim); border-color: var(--orange); color: var(--orange);
+  }
+  .currency-btn.active.robux-active {
+    background: var(--robux-dim); border-color: var(--robux); color: var(--robux);
+  }
+  .currency-btn .rbx-icon {
+    font-style: normal; font-weight: 700; font-size: 14px;
+  }
+
+  /* Robux mode accent swap */
+  body.robux-mode .price-currency.show-usd,
+  body.robux-mode .price-amount.show-usd,
+  body.robux-mode .price-period.show-usd { display: none; }
+  body:not(.robux-mode) .price-currency.show-robux,
+  body:not(.robux-mode) .price-amount.show-robux,
+  body:not(.robux-mode) .price-period.show-robux { display: none; }
+
+  body.robux-mode .check { border-color: var(--robux); color: var(--robux); }
+  body.robux-mode .pricing-card.featured { border-color: var(--robux); }
+  body.robux-mode .pricing-card.featured::before { background: var(--robux); }
+  body.robux-mode .pricing-card.featured .plan-badge { border-color: var(--robux); color: var(--robux); background: var(--robux-dim); }
+  body.robux-mode .plan-price .price-currency.show-robux { color: var(--robux); }
+  body.robux-mode .btn-plan-filled { background: var(--robux); }
+  body.robux-mode .btn-plan { border-color: var(--robux); color: var(--robux); }
+  body.robux-mode .btn-plan::before { background: var(--robux); }
+  body.robux-mode .robux-banner { display: flex; }
+
+  /* Robux mode banner */
+  .robux-banner {
+    display: none;
+    align-items: center; gap: 12px;
+    padding: 14px 48px;
+    background: var(--robux-dim);
+    border-bottom: 1px solid var(--robux);
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--robux);
+  }
+  .robux-banner::before { content: ''; width: 8px; height: 8px; background: var(--robux); border-radius: 50%; animation: pulse-green 2s infinite; }
+  @keyframes pulse-green {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0,176,111,0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(0,176,111,0); }
+  }
+
+  /* Period mode states */
+  body.monthly-mode .price-week { display: none; }
+  body:not(.monthly-mode) .price-month { display: none; }
+
+  /* ─── PRICING SECTION ─── */
   .pricing-section { padding: 80px 48px; }
   .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    margin-top: 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
   }
 
   .pricing-card {
-    background: var(--gray);
-    padding: 48px 40px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease;
+    background: var(--gray); padding: 48px 40px;
+    position: relative; overflow: hidden; transition: transform 0.3s ease;
   }
   .pricing-card:hover { transform: translateY(-8px); z-index: 2; }
   .pricing-card.featured {
-    background: var(--black);
-    border: 1px solid var(--orange);
+    background: var(--black); border: 1px solid var(--orange);
     transform: translateY(-16px);
   }
   .pricing-card.featured:hover { transform: translateY(-24px); }
   .pricing-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--gray2);
-    transition: background 0.3s ease;
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--gray2); transition: background 0.3s ease;
   }
   .pricing-card:hover::before { background: var(--orange); }
   .pricing-card.featured::before { background: var(--orange); }
 
   .plan-badge {
-    display: inline-block;
-    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-    padding: 5px 12px;
-    border: 1px solid var(--gray2);
-    color: var(--text-muted);
-    margin-bottom: 24px;
+    display: inline-block; font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    padding: 5px 12px; border: 1px solid var(--gray2); color: var(--text-muted); margin-bottom: 24px;
   }
   .pricing-card.featured .plan-badge {
     border-color: var(--orange); color: var(--orange); background: var(--orange-dim);
   }
+  .plan-name { font-family: 'Bebas Neue', sans-serif; font-size: 42px; letter-spacing: 2px; margin-bottom: 8px; }
+  .plan-tagline { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); line-height: 1.6; font-weight: 300; margin-bottom: 40px; }
 
-  .plan-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 42px; letter-spacing: 2px; margin-bottom: 8px;
-  }
-  .plan-tagline {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px; color: var(--text-muted);
-    line-height: 1.6; font-weight: 300; margin-bottom: 40px;
-  }
-
-  .plan-price {
-    margin-bottom: 8px;
-  }
+  .plan-price { margin-bottom: 8px; line-height: 1; }
+  .price-row { display: flex; align-items: flex-start; gap: 2px; }
   .price-currency {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px; color: var(--orange);
-    vertical-align: top; margin-top: 10px;
-    display: inline-block;
+    font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--orange);
+    margin-top: 10px;
   }
   .price-amount {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 88px; line-height: 1; color: var(--white);
-    letter-spacing: -2px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 88px; line-height: 1;
+    color: var(--white); letter-spacing: -2px;
+    transition: all 0.3s ease;
+  }
+  /* Animate price change */
+  .price-amount.changing {
+    opacity: 0; transform: translateY(-10px);
   }
   .price-period {
     font-size: 11px; letter-spacing: 2px; color: var(--text-muted);
-    display: block; margin-bottom: 40px;
+    display: block; margin-bottom: 40px; margin-top: 4px;
   }
-  .price-annual {
-    display: none;
-  }
-  .price-annual .price-amount { font-size: 88px; }
-  body.annual .price-monthly { display: none; }
-  body.annual .price-annual { display: block; }
 
-  .divider {
-    width: 100%; height: 1px; background: var(--gray2); margin: 32px 0;
-  }
+  .divider { width: 100%; height: 1px; background: var(--gray2); margin: 32px 0; }
 
   .features-list { list-style: none; margin-bottom: 40px; }
   .features-list li {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px; color: var(--text-muted);
-    padding: 10px 0;
-    border-bottom: 1px solid var(--gray2);
+    font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted);
+    padding: 10px 0; border-bottom: 1px solid var(--gray2);
     display: flex; align-items: center; gap: 12px;
     font-weight: 300; line-height: 1.5;
   }
   .features-list li:last-child { border-bottom: none; }
   .check {
-    width: 18px; height: 18px;
-    border: 1px solid var(--orange);
+    width: 18px; height: 18px; border: 1px solid var(--orange);
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    font-size: 10px; color: var(--orange);
+    flex-shrink: 0; font-size: 10px; color: var(--orange);
     clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+    transition: border-color 0.3s ease, color 0.3s ease;
   }
   .cross {
-    width: 18px; height: 18px;
-    border: 1px solid var(--gray2);
+    width: 18px; height: 18px; border: 1px solid var(--gray2);
     display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    font-size: 10px; color: var(--gray2);
+    flex-shrink: 0; font-size: 10px; color: var(--gray2);
   }
 
   .btn-plan {
-    display: block; text-align: center;
-    padding: 16px 24px;
-    border: 1px solid var(--orange);
-    color: var(--orange);
-    text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase;
-    transition: all 0.3s ease;
-    position: relative; overflow: hidden;
+    display: block; text-align: center; padding: 16px 24px;
+    border: 1px solid var(--orange); color: var(--orange);
+    text-decoration: none; font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.3s ease; position: relative; overflow: hidden;
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
   .btn-plan::before {
@@ -314,16 +339,11 @@
   .btn-plan span { position: relative; z-index: 1; }
 
   .btn-plan-filled {
-    display: block; text-align: center;
-    padding: 16px 24px;
-    background: var(--orange);
-    color: var(--black);
-    text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase;
-    transition: all 0.3s ease;
-    position: relative; overflow: hidden;
+    display: block; text-align: center; padding: 16px 24px;
+    background: var(--orange); color: var(--black);
+    text-decoration: none; font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.3s ease; position: relative; overflow: hidden;
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
   .btn-plan-filled::before {
@@ -337,41 +357,26 @@
   .comparison-section { padding: 120px 48px; background: var(--gray); }
   .section-label {
     font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
-    color: var(--orange); margin-bottom: 16px;
-    display: flex; align-items: center; gap: 16px;
+    color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 16px;
   }
   .section-label::before { content: ''; width: 30px; height: 1px; background: var(--orange); }
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 7vw, 96px);
-    line-height: 0.95; margin-bottom: 64px;
+    font-size: clamp(48px, 7vw, 96px); line-height: 0.95; margin-bottom: 64px;
   }
-
-  .compare-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  .compare-table { width: 100%; border-collapse: collapse; }
   .compare-table th {
-    padding: 24px 32px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px; letter-spacing: 2px;
-    border-bottom: 1px solid var(--gray2);
-    text-align: left;
+    padding: 24px 32px; font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 2px; border-bottom: 1px solid var(--gray2); text-align: left;
   }
   .compare-table th:first-child { color: var(--text-muted); font-size: 14px; letter-spacing: 3px; text-transform: uppercase; font-family: 'Space Mono', monospace; }
   .compare-table th.featured-col { color: var(--orange); }
-
   .compare-table td {
-    padding: 20px 32px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px; color: var(--text-muted);
-    border-bottom: 1px solid var(--gray2);
-    font-weight: 300;
+    padding: 20px 32px; font-family: 'Inter', sans-serif;
+    font-size: 13px; color: var(--text-muted); border-bottom: 1px solid var(--gray2); font-weight: 300;
   }
   .compare-table tr:last-child td { border-bottom: none; }
-  .compare-table td:first-child {
-    color: var(--white); font-weight: 400; font-size: 13px;
-  }
+  .compare-table td:first-child { color: var(--white); font-weight: 400; }
   .compare-table .featured-col { background: rgba(255,85,0,0.04); }
   .compare-table tr:hover td { background: var(--black); }
   .compare-table .yes { color: var(--orange); font-weight: 700; }
@@ -379,58 +384,27 @@
 
   /* ─── FAQ ─── */
   .faq-section { padding: 120px 48px; }
-  .faq-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    margin-top: 64px;
-  }
-  .faq-item {
-    border-bottom: 1px solid var(--gray2);
-    padding-bottom: 32px;
-  }
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 64px; }
+  .faq-item { border-bottom: 1px solid var(--gray2); padding-bottom: 32px; }
   .faq-q {
-    font-family: 'Space Mono', monospace;
-    font-size: 14px; font-weight: 700;
-    margin-bottom: 16px; color: var(--white);
-    display: flex; align-items: flex-start; gap: 12px;
+    font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700;
+    margin-bottom: 16px; color: var(--white); display: flex; align-items: flex-start; gap: 12px;
   }
   .faq-q::before {
-    content: '?';
-    color: var(--orange); font-family: 'Bebas Neue', sans-serif;
+    content: '?'; color: var(--orange); font-family: 'Bebas Neue', sans-serif;
     font-size: 22px; line-height: 1; flex-shrink: 0;
   }
-  .faq-a {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px; color: var(--text-muted);
-    line-height: 1.8; font-weight: 300;
-    padding-left: 34px;
-  }
+  .faq-a { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); line-height: 1.8; font-weight: 300; padding-left: 34px; }
 
   /* ─── TICKER ─── */
-  .ticker-wrap {
-    overflow: hidden;
-    border-top: 1px solid var(--gray2);
-    border-bottom: 1px solid var(--gray2);
-    padding: 16px 0; background: var(--gray);
-  }
+  .ticker-wrap { overflow: hidden; border-top: 1px solid var(--gray2); border-bottom: 1px solid var(--gray2); padding: 16px 0; background: var(--gray); }
   .ticker { display: flex; animation: ticker 20s linear infinite; white-space: nowrap; }
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  .ticker-item {
-    display: inline-flex; align-items: center; gap: 32px;
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--text-muted); padding: 0 32px;
-  }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .ticker-item { display: inline-flex; align-items: center; gap: 32px; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-muted); padding: 0 32px; }
   .ticker-item span { color: var(--orange); font-size: 16px; }
 
   /* ─── CTA ─── */
-  .cta-section {
-    padding: 160px 48px; text-align: center;
-    position: relative; overflow: hidden;
-  }
+  .cta-section { padding: 160px 48px; text-align: center; position: relative; overflow: hidden; }
   .cta-section::before {
     content: ''; position: absolute; top: 50%; left: 50%;
     width: 800px; height: 800px; border-radius: 50%;
@@ -439,9 +413,8 @@
   }
   .btn-primary {
     display: inline-flex; align-items: center; gap: 12px;
-    padding: 16px 36px; background: var(--orange);
-    color: var(--black); text-decoration: none;
-    font-family: 'Space Mono', monospace; font-size: 12px;
+    padding: 16px 36px; background: var(--orange); color: var(--black);
+    text-decoration: none; font-family: 'Space Mono', monospace; font-size: 12px;
     font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
     position: relative; overflow: hidden; transition: all 0.3s ease;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
@@ -454,18 +427,12 @@
   .btn-primary span { position: relative; z-index: 1; }
 
   /* ─── FOOTER ─── */
-  footer {
-    padding: 48px; border-top: 1px solid var(--gray2);
-    display: flex; justify-content: space-between; align-items: center;
-  }
+  footer { padding: 48px; border-top: 1px solid var(--gray2); display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 4px; }
   .footer-logo span { color: var(--orange); }
   .footer-copy { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; }
   .footer-links { display: flex; gap: 24px; list-style: none; }
-  .footer-links a {
-    color: var(--text-muted); text-decoration: none;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s ease;
-  }
+  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s ease; }
   .footer-links a:hover { color: var(--orange); }
 
   /* ─── REVEAL ─── */
@@ -476,16 +443,15 @@
     nav { padding: 20px 24px; }
     .nav-links { display: none; }
     .page-header, .pricing-section, .comparison-section, .faq-section { padding: 120px 24px 60px; }
+    .controls-bar { padding: 32px 24px; }
     .pricing-grid { grid-template-columns: 1fr; }
     .pricing-card.featured { transform: none; }
     .faq-grid { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 24px; text-align: center; }
-    .compare-table { font-size: 11px; }
-    .compare-table th, .compare-table td { padding: 16px; }
   }
 </style>
 </head>
-<body>
+<body class="monthly-mode"><!-- starts on "per week" view (monthly-mode = false = weekly) wait, see JS -->
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
@@ -505,92 +471,180 @@
   <div class="header-bg-text">PRICE</div>
   <p class="page-tag">// Transparent Pricing — No Surprises</p>
   <h1 class="page-title"><span class="glitch" data-text="SIMPLE">SIMPLE</span><br><span>PRICING</span></h1>
-  <p class="page-desc">[ Describe your pricing philosophy. Why is it fair? What does the client always get regardless of tier? ]</p>
+  <p class="page-desc">[ Describe your pricing philosophy. Why is it fair? What does the client always get? ]</p>
 </header>
 
-<!-- Toggle -->
-<div class="toggle-wrap">
-  <span class="toggle-label active" id="label-monthly">Monthly</span>
-  <div class="toggle" id="toggle" onclick="toggleBilling()"></div>
-  <span class="toggle-label" id="label-annual">Annual</span>
-  <span class="save-badge">Save 20%</span>
+<!-- Robux Banner (hidden until robux mode) -->
+<div class="robux-banner" id="robuxBanner">
+  Robux pricing active — prices shown in R$ · All tiers available
+</div>
+
+<!-- Controls Bar -->
+<div class="controls-bar">
+
+  <!-- Period toggle -->
+  <div class="toggle-group">
+    <span class="toggle-label active" id="label-week">Per Week</span>
+    <div class="toggle" id="periodToggle" onclick="togglePeriod()"></div>
+    <span class="toggle-label" id="label-month">Per Month</span>
+    <span class="save-badge" id="saveBadge" style="display:none">Save 20%</span>
+  </div>
+
+  <!-- Currency switcher -->
+  <div class="currency-switcher">
+    <button class="currency-btn active" id="btn-usd" onclick="setCurrency('usd')">
+      <span>$ USD</span>
+    </button>
+    <button class="currency-btn" id="btn-robux" onclick="setCurrency('robux')">
+      <em class="rbx-icon">R$</em><span>Robux</span>
+    </button>
+  </div>
+
 </div>
 
 <!-- Pricing Cards -->
 <section class="pricing-section">
   <div class="pricing-grid">
 
-    <!-- Starter -->
+    <!-- ── BASIC ── -->
     <div class="pricing-card reveal">
       <div class="plan-badge">Starter</div>
       <div class="plan-name">BASIC</div>
       <p class="plan-tagline">[ Who is this plan for? What's the ideal use case? ]</p>
-      <div class="plan-price">
-        <div class="price-monthly">
-          <span class="price-currency">$</span><span class="price-amount">XXX</span>
-          <span class="price-period">/ month or per project</span>
+
+      <!-- USD week -->
+      <div class="plan-price price-week show-usd">
+        <div class="price-row">
+          <span class="price-currency show-usd">$</span>
+          <span class="price-amount show-usd" id="basic-usd-week">XXX</span>
         </div>
-        <div class="price-annual">
-          <span class="price-currency">$</span><span class="price-amount">XXX</span>
-          <span class="price-period">/ month, billed annually</span>
-        </div>
+        <span class="price-period show-usd">/ week</span>
       </div>
+      <!-- USD month -->
+      <div class="plan-price price-month show-usd">
+        <div class="price-row">
+          <span class="price-currency show-usd">$</span>
+          <span class="price-amount show-usd" id="basic-usd-month">XXX</span>
+        </div>
+        <span class="price-period show-usd">/ month — 20% off</span>
+      </div>
+      <!-- Robux week -->
+      <div class="plan-price price-week show-robux">
+        <div class="price-row">
+          <span class="price-currency show-robux" style="color:var(--robux)">R$</span>
+          <span class="price-amount show-robux" id="basic-rbx-week">XXXX</span>
+        </div>
+        <span class="price-period show-robux">/ week</span>
+      </div>
+      <!-- Robux month -->
+      <div class="plan-price price-month show-robux">
+        <div class="price-row">
+          <span class="price-currency show-robux" style="color:var(--robux)">R$</span>
+          <span class="price-amount show-robux" id="basic-rbx-month">XXXX</span>
+        </div>
+        <span class="price-period show-robux">/ month — 20% off</span>
+      </div>
+
       <div class="divider"></div>
       <ul class="features-list">
         <li><span class="check">✓</span>[ Feature / deliverable 1 ]</li>
         <li><span class="check">✓</span>[ Feature / deliverable 2 ]</li>
         <li><span class="check">✓</span>[ Feature / deliverable 3 ]</li>
         <li><span class="check">✓</span>[ X ] revisions included</li>
-        <li><span class="cross">✗</span>[ Premium feature - not included ]</li>
-        <li><span class="cross">✗</span>[ Premium feature - not included ]</li>
+        <li><span class="cross">✗</span>[ Premium feature ]</li>
+        <li><span class="cross">✗</span>[ Premium feature ]</li>
         <li><span class="cross">✗</span>Priority support</li>
       </ul>
       <a href="/contact" class="btn-plan"><span>Get Started →</span></a>
     </div>
 
-    <!-- Pro (featured) -->
+    <!-- ── PRO (featured) ── -->
     <div class="pricing-card featured reveal">
       <div class="plan-badge">Most Popular</div>
       <div class="plan-name">PRO</div>
       <p class="plan-tagline">[ Who is this plan for? What's the ideal use case? ]</p>
-      <div class="plan-price">
-        <div class="price-monthly">
-          <span class="price-currency">$</span><span class="price-amount">XXX</span>
-          <span class="price-period">/ month or per project</span>
+
+      <!-- USD week -->
+      <div class="plan-price price-week show-usd">
+        <div class="price-row">
+          <span class="price-currency show-usd">$</span>
+          <span class="price-amount show-usd" id="pro-usd-week">XXX</span>
         </div>
-        <div class="price-annual">
-          <span class="price-currency">$</span><span class="price-amount">XXX</span>
-          <span class="price-period">/ month, billed annually</span>
-        </div>
+        <span class="price-period show-usd">/ week</span>
       </div>
+      <!-- USD month -->
+      <div class="plan-price price-month show-usd">
+        <div class="price-row">
+          <span class="price-currency show-usd">$</span>
+          <span class="price-amount show-usd" id="pro-usd-month">XXX</span>
+        </div>
+        <span class="price-period show-usd">/ month — 20% off</span>
+      </div>
+      <!-- Robux week -->
+      <div class="plan-price price-week show-robux">
+        <div class="price-row">
+          <span class="price-currency show-robux" style="color:var(--robux)">R$</span>
+          <span class="price-amount show-robux" id="pro-rbx-week">XXXX</span>
+        </div>
+        <span class="price-period show-robux">/ week</span>
+      </div>
+      <!-- Robux month -->
+      <div class="plan-price price-month show-robux">
+        <div class="price-row">
+          <span class="price-currency show-robux" style="color:var(--robux)">R$</span>
+          <span class="price-amount show-robux" id="pro-rbx-month">XXXX</span>
+        </div>
+        <span class="price-period show-robux">/ month — 20% off</span>
+      </div>
+
       <div class="divider"></div>
       <ul class="features-list">
         <li><span class="check">✓</span>Everything in Basic</li>
-        <li><span class="check">✓</span>[ Pro feature / deliverable 1 ]</li>
-        <li><span class="check">✓</span>[ Pro feature / deliverable 2 ]</li>
+        <li><span class="check">✓</span>[ Pro feature 1 ]</li>
+        <li><span class="check">✓</span>[ Pro feature 2 ]</li>
         <li><span class="check">✓</span>[ X ] revisions included</li>
-        <li><span class="check">✓</span>[ Pro feature / deliverable 3 ]</li>
-        <li><span class="check">✓</span>[ Pro feature / deliverable 4 ]</li>
+        <li><span class="check">✓</span>[ Pro feature 3 ]</li>
+        <li><span class="check">✓</span>[ Pro feature 4 ]</li>
         <li><span class="cross">✗</span>Dedicated account manager</li>
       </ul>
       <a href="/contact" class="btn-plan-filled"><span>Get Started →</span></a>
     </div>
 
-    <!-- Enterprise -->
+    <!-- ── ELITE ── -->
     <div class="pricing-card reveal">
       <div class="plan-badge">Enterprise</div>
       <div class="plan-name">ELITE</div>
-      <p class="plan-tagline">[ Who is this plan for? Large teams, complex projects? ]</p>
-      <div class="plan-price">
-        <div class="price-monthly">
-          <span class="price-currency" style="font-size:20px;margin-top:20px">Custom</span>
-          <span class="price-period">starting from $XXX</span>
+      <p class="plan-tagline">[ Large teams, complex or ongoing projects. ]</p>
+
+      <!-- USD week -->
+      <div class="plan-price price-week show-usd">
+        <div class="price-row">
+          <span class="price-currency show-usd" style="font-size:18px;margin-top:18px">Custom</span>
         </div>
-        <div class="price-annual">
-          <span class="price-currency" style="font-size:20px;margin-top:20px">Custom</span>
-          <span class="price-period">starting from $XXX / year</span>
-        </div>
+        <span class="price-period show-usd">starting from $XXX / week</span>
       </div>
+      <!-- USD month -->
+      <div class="plan-price price-month show-usd">
+        <div class="price-row">
+          <span class="price-currency show-usd" style="font-size:18px;margin-top:18px">Custom</span>
+        </div>
+        <span class="price-period show-usd">starting from $XXX / month</span>
+      </div>
+      <!-- Robux week -->
+      <div class="plan-price price-week show-robux">
+        <div class="price-row">
+          <span class="price-currency show-robux" style="font-size:18px;margin-top:18px;color:var(--robux)">Custom</span>
+        </div>
+        <span class="price-period show-robux">starting from R$ XXXX / week</span>
+      </div>
+      <!-- Robux month -->
+      <div class="plan-price price-month show-robux">
+        <div class="price-row">
+          <span class="price-currency show-robux" style="font-size:18px;margin-top:18px;color:var(--robux)">Custom</span>
+        </div>
+        <span class="price-period show-robux">starting from R$ XXXX / month</span>
+      </div>
+
       <div class="divider"></div>
       <ul class="features-list">
         <li><span class="check">✓</span>Everything in Pro</li>
@@ -613,12 +667,12 @@
     <div class="ticker-item">Transparent Pricing <span>✦</span></div>
     <div class="ticker-item">No Hidden Fees <span>✦</span></div>
     <div class="ticker-item">VxpeInjected <span>✦</span></div>
-    <div class="ticker-item">Results Guaranteed <span>✦</span></div>
+    <div class="ticker-item">USD & Robux Accepted <span>✦</span></div>
     <div class="ticker-item">Quality First <span>✦</span></div>
     <div class="ticker-item">Transparent Pricing <span>✦</span></div>
     <div class="ticker-item">No Hidden Fees <span>✦</span></div>
     <div class="ticker-item">VxpeInjected <span>✦</span></div>
-    <div class="ticker-item">Results Guaranteed <span>✦</span></div>
+    <div class="ticker-item">USD & Robux Accepted <span>✦</span></div>
     <div class="ticker-item">Quality First <span>✦</span></div>
   </div>
 </div>
@@ -637,54 +691,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>[ Feature Name ]</td>
-        <td class="yes">✓</td>
-        <td class="featured-col yes">✓</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>[ Feature Name ]</td>
-        <td class="yes">✓</td>
-        <td class="featured-col yes">✓</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>[ Feature Name ]</td>
-        <td class="no">✗</td>
-        <td class="featured-col yes">✓</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>[ Feature Name ]</td>
-        <td class="no">✗</td>
-        <td class="featured-col yes">✓</td>
-        <td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>Revisions</td>
-        <td>[ X ] included</td>
-        <td class="featured-col">[ X ] included</td>
-        <td>Unlimited</td>
-      </tr>
-      <tr>
-        <td>Turnaround</td>
-        <td>[ X days ]</td>
-        <td class="featured-col">[ X days ]</td>
-        <td>Priority</td>
-      </tr>
-      <tr>
-        <td>Support</td>
-        <td>Email</td>
-        <td class="featured-col">Email + Chat</td>
-        <td>24/7 Priority</td>
-      </tr>
-      <tr>
-        <td>Dedicated Manager</td>
-        <td class="no">✗</td>
-        <td class="featured-col no">✗</td>
-        <td class="yes">✓</td>
-      </tr>
+      <tr><td>[ Feature Name ]</td><td class="yes">✓</td><td class="featured-col yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>[ Feature Name ]</td><td class="yes">✓</td><td class="featured-col yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>[ Feature Name ]</td><td class="no">✗</td><td class="featured-col yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>[ Feature Name ]</td><td class="no">✗</td><td class="featured-col yes">✓</td><td class="yes">✓</td></tr>
+      <tr><td>Revisions</td><td>[ X ] included</td><td class="featured-col">[ X ] included</td><td>Unlimited</td></tr>
+      <tr><td>Turnaround</td><td>[ X days ]</td><td class="featured-col">[ X days ]</td><td>Priority</td></tr>
+      <tr><td>Support</td><td>Email</td><td class="featured-col">Email + Chat</td><td>24/7 Priority</td></tr>
+      <tr><td>Payment</td><td>USD / Robux</td><td class="featured-col">USD / Robux</td><td>USD / Robux</td></tr>
+      <tr><td>Dedicated Manager</td><td class="no">✗</td><td class="featured-col no">✗</td><td class="yes">✓</td></tr>
     </tbody>
   </table>
 </section>
@@ -696,35 +711,27 @@
   <div class="faq-grid">
     <div class="faq-item reveal">
       <div class="faq-q">How does payment work?</div>
-      <p class="faq-a">[ Explain your payment terms. Deposit required? Full upfront? Net-30? Payment via what method? ]</p>
+      <p class="faq-a">[ Explain your payment terms. Deposit required? Full upfront? Payment via what method? Robux via group funds, etc? ]</p>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Do you accept Robux?</div>
+      <p class="faq-a">[ Explain how Robux payment works. Group funds? Game pass? What's the process? ]</p>
     </div>
     <div class="faq-item reveal">
       <div class="faq-q">What if I need more revisions?</div>
-      <p class="faq-a">[ Explain your revision policy. Extra revisions available? At what rate? ]</p>
+      <p class="faq-a">[ Explain your revision policy. Extra revisions available at what rate? ]</p>
     </div>
     <div class="faq-item reveal">
       <div class="faq-q">How long does a project take?</div>
       <p class="faq-a">[ Describe typical turnaround times per plan or project type. ]</p>
     </div>
     <div class="faq-item reveal">
-      <div class="faq-q">Can I upgrade my plan?</div>
-      <p class="faq-a">[ Explain the upgrade process. Is it seamless? Any fees? ]</p>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q">Do you offer refunds?</div>
-      <p class="faq-a">[ Explain your refund policy. Under what conditions? Partial or full? ]</p>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q">What do I need to get started?</div>
-      <p class="faq-a">[ Describe the onboarding process. What info / assets do you need from clients? ]</p>
+      <div class="faq-q">Is weekly or monthly better value?</div>
+      <p class="faq-a">[ Explain when weekly makes sense vs monthly. Monthly is 20% cheaper for ongoing work. ]</p>
     </div>
     <div class="faq-item reveal">
       <div class="faq-q">Are there any hidden fees?</div>
       <p class="faq-a">[ Reassure clients about transparency. What's included vs what costs extra? ]</p>
-    </div>
-    <div class="faq-item reveal">
-      <div class="faq-q">Do you work with international clients?</div>
-      <p class="faq-a">[ Describe any timezone or geographic limitations, if any. ]</p>
     </div>
   </div>
 </section>
@@ -752,6 +759,11 @@
 </footer>
 
 <script>
+  // ─── STATE ───
+  let isMonthly = false;   // starts on weekly
+  let isRobux   = false;
+
+  // ─── CURSOR ───
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
@@ -768,16 +780,39 @@
     el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; cursorRing.style.transform = 'scale(1)'; });
   });
 
-  function toggleBilling() {
-    const toggle = document.getElementById('toggle');
-    const lm = document.getElementById('label-monthly');
-    const la = document.getElementById('label-annual');
-    toggle.classList.toggle('on');
-    document.body.classList.toggle('annual');
-    lm.classList.toggle('active');
-    la.classList.toggle('active');
+  // ─── PERIOD TOGGLE (Week / Month) ───
+  function togglePeriod() {
+    isMonthly = !isMonthly;
+    const toggle = document.getElementById('periodToggle');
+    const lw = document.getElementById('label-week');
+    const lm = document.getElementById('label-month');
+    const badge = document.getElementById('saveBadge');
+
+    toggle.classList.toggle('on', isMonthly);
+    lw.classList.toggle('active', !isMonthly);
+    lm.classList.toggle('active', isMonthly);
+    badge.style.display = isMonthly ? 'inline-block' : 'none';
+
+    document.body.classList.toggle('monthly-mode', isMonthly);
   }
 
+  // ─── CURRENCY SWITCHER (USD / Robux) ───
+  function setCurrency(type) {
+    isRobux = (type === 'robux');
+
+    const btnUsd   = document.getElementById('btn-usd');
+    const btnRobux = document.getElementById('btn-robux');
+
+    btnUsd.classList.toggle('active', !isRobux);
+    btnUsd.classList.remove('robux-active');
+
+    btnRobux.classList.toggle('active', isRobux);
+    btnRobux.classList.toggle('robux-active', isRobux);
+
+    document.body.classList.toggle('robux-mode', isRobux);
+  }
+
+  // ─── REVEAL ───
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
@@ -788,6 +823,9 @@
     });
   }, { threshold: 0.08 });
   reveals.forEach(el => observer.observe(el));
+
+  // Init — start on weekly, USD
+  document.body.classList.remove('monthly-mode');
 </script>
 </body>
 </html>
