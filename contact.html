@@ -29,13 +29,19 @@
   .cursor {
     position: fixed; width: 12px; height: 12px; background: var(--orange);
     border-radius: 50%; pointer-events: none; z-index: 9999;
-    transition: transform 0.1s ease; mix-blend-mode: difference;
+    transition: transform 0.1s ease, opacity 0.2s ease; mix-blend-mode: difference;
   }
   .cursor-ring {
     position: fixed; width: 40px; height: 40px;
     border: 1px solid var(--orange); border-radius: 50%;
-    pointer-events: none; z-index: 9998; transition: all 0.15s ease; opacity: 0.6;
+    pointer-events: none; z-index: 9998;
+    transition: all 0.15s ease, opacity 0.2s ease; opacity: 0.6;
   }
+  /* Hide custom cursor while typing — show browser text cursor instead */
+  body.is-typing { cursor: text; }
+  body.is-typing .cursor,
+  body.is-typing .cursor-ring { opacity: 0 !important; }
+
   body::before {
     content: ''; position: fixed; inset: 0;
     background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
@@ -108,8 +114,7 @@
 
   /* ─── PAGE HEADER ─── */
   .page-header {
-    padding: 180px 48px 80px;
-    position: relative; overflow: hidden;
+    padding: 180px 48px 80px; position: relative; overflow: hidden;
     border-bottom: 1px solid var(--gray2);
   }
   .page-header::before {
@@ -117,8 +122,7 @@
     height: 1px; background: linear-gradient(90deg, var(--orange), transparent);
   }
   .header-bg-text {
-    position: absolute; right: -20px; top: 50%;
-    transform: translateY(-50%);
+    position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
     font-family: 'Bebas Neue', sans-serif; font-size: 260px;
     color: transparent; -webkit-text-stroke: 1px var(--gray2);
     pointer-events: none; letter-spacing: -8px; user-select: none;
@@ -142,27 +146,17 @@
   }
 
   /* ─── CONTACT LAYOUT ─── */
-  .contact-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 80vh;
-  }
+  .contact-section { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
 
-  /* ─── LEFT: INFO ─── */
+  /* ─── LEFT INFO ─── */
   .contact-info {
-    padding: 80px 48px;
-    border-right: 1px solid var(--gray2);
-    position: relative;
-    background: var(--gray);
+    padding: 80px 48px; border-right: 1px solid var(--gray2);
+    position: relative; background: var(--gray);
   }
   .contact-info::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
-    width: 3px;
-    background: linear-gradient(180deg, var(--orange), transparent);
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0;
+    width: 3px; background: linear-gradient(180deg, var(--orange), transparent);
   }
-
   .section-label {
     font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
     color: var(--orange); margin-bottom: 16px;
@@ -171,247 +165,124 @@
   .section-label::before { content: ''; width: 30px; height: 1px; background: var(--orange); }
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 5vw, 72px);
-    line-height: 0.95; margin-bottom: 32px;
+    font-size: clamp(48px, 5vw, 72px); line-height: 0.95; margin-bottom: 32px;
   }
-
   .contact-intro {
-    font-family: 'Inter', sans-serif;
-    font-size: 15px; color: var(--text-muted);
+    font-family: 'Inter', sans-serif; font-size: 15px; color: var(--text-muted);
     line-height: 1.9; font-weight: 300; margin-bottom: 56px;
   }
-
-  .contact-details { display: flex; flex-direction: column; gap: 0; }
+  .contact-details { display: flex; flex-direction: column; }
   .contact-detail {
     display: flex; align-items: flex-start; gap: 20px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--gray2);
-    transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
+    padding: 24px 0; border-bottom: 1px solid var(--gray2);
+    transition: all 0.3s ease; text-decoration: none; color: inherit;
   }
   .contact-detail:hover { padding-left: 8px; }
   .contact-detail:last-child { border-bottom: none; }
-
   .detail-icon {
-    width: 40px; height: 40px;
-    border: 1px solid var(--orange);
+    width: 40px; height: 40px; border: 1px solid var(--orange);
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px; flex-shrink: 0;
+    font-size: 16px; flex-shrink: 0; transition: background 0.3s ease;
     clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
-    transition: background 0.3s ease;
   }
   .contact-detail:hover .detail-icon { background: var(--orange-dim); }
-
-  .detail-label {
-    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 4px;
-  }
-  .detail-value {
-    font-family: 'Space Mono', monospace;
-    font-size: 13px; color: var(--white);
-    transition: color 0.3s ease;
-  }
+  .detail-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+  .detail-value { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--white); transition: color 0.3s ease; }
   .contact-detail:hover .detail-value { color: var(--orange); }
 
   .availability {
-    margin-top: 48px;
-    padding: 24px;
-    border: 1px solid var(--gray2);
-    position: relative;
-    overflow: hidden;
+    margin-top: 48px; padding: 24px; border: 1px solid var(--gray2);
+    position: relative; overflow: hidden;
   }
   .availability::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: var(--orange);
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--orange);
   }
   .avail-dot {
-    width: 8px; height: 8px;
-    background: #00ff88;
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 10px;
-    animation: pulse-dot 2s ease-in-out infinite;
+    width: 8px; height: 8px; background: #00ff88; border-radius: 50%;
+    display: inline-block; margin-right: 10px; animation: pulse-dot 2s ease-in-out infinite;
   }
   @keyframes pulse-dot {
     0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,136,0.5); }
     50% { box-shadow: 0 0 0 6px rgba(0,255,136,0); }
   }
-  .avail-label {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--white);
-  }
-  .avail-desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px; color: var(--text-muted);
-    margin-top: 10px; line-height: 1.6; font-weight: 300;
-  }
+  .avail-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--white); }
+  .avail-desc { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.6; font-weight: 300; }
 
-  /* ─── SOCIAL LINKS ─── */
-  .social-links {
-    display: flex; gap: 12px; margin-top: 40px;
-  }
-  .social-link {
-    width: 44px; height: 44px;
-    border: 1px solid var(--gray2);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-muted); text-decoration: none;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
-  }
-  .social-link:hover {
-    border-color: var(--orange);
-    color: var(--orange);
-    background: var(--orange-dim);
-  }
+  /* ─── RIGHT FORM ─── */
+  .contact-form-wrap { padding: 80px 48px; }
+  .form-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; margin-bottom: 8px; }
+  .form-subtitle { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); margin-bottom: 48px; font-weight: 300; line-height: 1.6; }
 
-  /* ─── RIGHT: FORM ─── */
-  .contact-form-wrap {
-    padding: 80px 48px;
-    position: relative;
-  }
-
-  .form-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px; letter-spacing: 2px; margin-bottom: 8px;
-  }
-  .form-subtitle {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px; color: var(--text-muted); margin-bottom: 48px;
-    font-weight: 300; line-height: 1.6;
-  }
-
-  .form-group {
-    margin-bottom: 28px;
-    position: relative;
-  }
-  .form-label {
-    display: block;
-    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 10px;
-  }
-  .form-input, .form-textarea, .form-select {
-    width: 100%;
-    background: var(--gray);
-    border: 1px solid var(--gray2);
-    color: var(--white);
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    padding: 16px 20px;
-    outline: none;
-    transition: all 0.3s ease;
+  .form-group { margin-bottom: 28px; }
+  .form-label { display: block; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+  .form-input, .form-textarea {
+    width: 100%; background: var(--gray); border: 1px solid var(--gray2);
+    color: var(--white); font-family: 'Space Mono', monospace; font-size: 13px;
+    padding: 16px 20px; outline: none; transition: all 0.3s ease; cursor: text;
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
-    appearance: none;
   }
-  .form-input:focus, .form-textarea:focus, .form-select:focus {
-    border-color: var(--orange);
-    background: rgba(255,85,0,0.04);
-    box-shadow: 0 0 0 1px var(--orange);
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--orange); background: rgba(255,85,0,0.04); box-shadow: 0 0 0 1px var(--orange);
   }
-  .form-input::placeholder, .form-textarea::placeholder {
-    color: var(--gray2); font-family: 'Space Mono', monospace;
-  }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--gray2); }
   .form-textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-
-  /* Budget selector */
-  .budget-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
+  .budget-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .budget-option { display: none; }
   .budget-label {
-    display: block;
-    padding: 12px 8px;
-    border: 1px solid var(--gray2);
-    text-align: center;
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.3s ease;
+    display: block; padding: 12px 8px; border: 1px solid var(--gray2); text-align: center;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+    cursor: pointer; transition: all 0.3s ease;
     clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
   }
-  .budget-option:checked + .budget-label {
-    border-color: var(--orange);
-    color: var(--orange);
-    background: var(--orange-dim);
-  }
-  .budget-label:hover {
-    border-color: var(--orange);
-    color: var(--orange);
-  }
+  .budget-option:checked + .budget-label { border-color: var(--orange); color: var(--orange); background: var(--orange-dim); }
+  .budget-label:hover { border-color: var(--orange); color: var(--orange); }
 
-  /* Service selector */
-  .service-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
+  .service-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .service-option { display: none; }
   .service-label {
-    display: block;
-    padding: 14px 16px;
-    border: 1px solid var(--gray2);
-    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all 0.3s ease;
+    display: block; padding: 14px 16px; border: 1px solid var(--gray2);
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);
+    cursor: pointer; transition: all 0.3s ease;
     clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
   }
-  .service-option:checked + .service-label {
-    border-color: var(--orange);
-    color: var(--orange);
-    background: var(--orange-dim);
-  }
-  .service-label:hover {
-    border-color: var(--orange);
-    color: var(--orange);
-  }
+  .service-option:checked + .service-label { border-color: var(--orange); color: var(--orange); background: var(--orange-dim); }
+  .service-label:hover { border-color: var(--orange); color: var(--orange); }
 
   .form-submit {
-    display: inline-flex; align-items: center; gap: 12px;
-    padding: 18px 40px;
-    background: var(--orange); color: var(--black);
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 18px 40px; background: var(--orange); color: var(--black);
     border: none; cursor: pointer;
     font-family: 'Space Mono', monospace; font-size: 12px;
     font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    position: relative; overflow: hidden;
+    position: relative; overflow: hidden; width: 100%; margin-top: 8px;
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
     transition: all 0.3s ease;
-    margin-top: 8px;
-    width: 100%;
-    justify-content: center;
   }
   .form-submit::before {
     content: ''; position: absolute; inset: 0;
     background: var(--white); transform: translateX(-100%); transition: transform 0.3s ease;
   }
   .form-submit:hover::before { transform: translateX(0); }
-  .form-submit span { position: relative; z-index: 1; }
   .form-submit:hover { box-shadow: 0 0 40px var(--orange-glow); }
+  .form-submit span { position: relative; z-index: 1; }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-submit:disabled::before { display: none; }
 
-  /* Success state */
-  .form-success {
-    display: none;
-    text-align: center;
-    padding: 60px 40px;
+  .form-error {
+    display: none; margin-top: 16px; padding: 14px 20px;
+    border: 1px solid #ff3333; background: rgba(255,51,51,0.08);
+    font-family: 'Inter', sans-serif; font-size: 12px; color: #ff6666; line-height: 1.6;
   }
+  .form-error.active { display: block; }
+
+  .form-success { display: none; text-align: center; padding: 60px 40px; }
   .form-success.active { display: block; }
   .success-icon {
-    width: 64px; height: 64px;
-    border: 2px solid var(--orange);
-    border-radius: 50%;
+    width: 64px; height: 64px; border: 2px solid var(--orange); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 24px; color: var(--orange);
-    margin: 0 auto 24px;
+    font-size: 24px; color: var(--orange); margin: 0 auto 24px;
     animation: pulse-ring 1s ease;
   }
   @keyframes pulse-ring {
@@ -419,108 +290,43 @@
     60% { transform: scale(1.1); }
     100% { transform: scale(1); opacity: 1; }
   }
-  .success-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px; margin-bottom: 16px;
-  }
+  .success-title { font-family: 'Bebas Neue', sans-serif; font-size: 48px; margin-bottom: 16px; }
   .success-title span { color: var(--orange); }
-  .success-msg {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px; color: var(--text-muted); line-height: 1.7;
-  }
+  .success-msg { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-muted); line-height: 1.7; }
 
   /* ─── TICKER ─── */
-  .ticker-wrap {
-    overflow: hidden; border-top: 1px solid var(--gray2);
-    border-bottom: 1px solid var(--gray2); padding: 16px 0; background: var(--gray);
-  }
+  .ticker-wrap { overflow: hidden; border-top: 1px solid var(--gray2); border-bottom: 1px solid var(--gray2); padding: 16px 0; background: var(--gray); }
   .ticker { display: flex; animation: ticker 20s linear infinite; white-space: nowrap; }
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-  .ticker-item {
-    display: inline-flex; align-items: center; gap: 32px;
-    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
-    color: var(--text-muted); padding: 0 32px;
-  }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .ticker-item { display: inline-flex; align-items: center; gap: 32px; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-muted); padding: 0 32px; }
   .ticker-item span { color: var(--orange); font-size: 16px; }
 
-  /* ─── MAP / LOCATION ─── */
-  .location-section {
-    padding: 120px 48px;
-    background: var(--gray);
-    border-top: 1px solid var(--gray2);
-  }
-  .location-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-    margin-top: 64px;
-  }
-  .location-map {
-    aspect-ratio: 4/3;
-    background: var(--black);
-    border: 1px solid var(--gray2);
-    position: relative; overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-  }
+  /* ─── LOCATION ─── */
+  .location-section { padding: 120px 48px; background: var(--gray); border-top: 1px solid var(--gray2); }
+  .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 64px; }
+  .location-map { aspect-ratio: 4/3; background: var(--black); border: 1px solid var(--gray2); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
   .location-map::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,85,0,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,85,0,0.05) 1px, transparent 1px);
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,85,0,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,85,0,0.05) 1px, transparent 1px);
     background-size: 40px 40px;
   }
-  .map-pin {
-    position: relative; z-index: 1;
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-  }
-  .pin-dot {
-    width: 16px; height: 16px;
-    background: var(--orange);
-    border-radius: 50%;
-    box-shadow: 0 0 0 4px var(--orange-dim), 0 0 20px var(--orange-glow);
-    animation: pulse-dot 2s ease-in-out infinite;
-  }
-  .pin-label {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--orange);
-    background: rgba(8,8,8,0.8);
-    padding: 4px 12px;
-    border: 1px solid var(--orange);
-  }
-
-  .location-info { }
-  .location-item {
-    padding: 24px 0;
-    border-bottom: 1px solid var(--gray2);
-  }
+  .map-pin { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .pin-dot { width: 16px; height: 16px; background: var(--orange); border-radius: 50%; box-shadow: 0 0 0 4px var(--orange-dim), 0 0 20px var(--orange-glow); animation: pulse-dot 2s ease-in-out infinite; }
+  .pin-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); background: rgba(8,8,8,0.8); padding: 4px 12px; border: 1px solid var(--orange); }
+  .location-item { padding: 24px 0; border-bottom: 1px solid var(--gray2); }
   .location-item:last-child { border-bottom: none; }
-  .location-label {
-    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--orange); margin-bottom: 8px;
-  }
-  .location-value {
-    font-family: 'Inter', sans-serif;
-    font-size: 15px; color: var(--white); line-height: 1.5; font-weight: 300;
-  }
+  .location-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+  .location-value { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--white); line-height: 1.5; font-weight: 300; }
 
   /* ─── FOOTER ─── */
-  footer {
-    padding: 48px; border-top: 1px solid var(--gray2);
-    display: flex; justify-content: space-between; align-items: center;
-  }
+  footer { padding: 48px; border-top: 1px solid var(--gray2); display: flex; justify-content: space-between; align-items: center; }
   .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 4px; }
   .footer-logo span { color: var(--orange); }
   .footer-copy { font-size: 11px; color: var(--text-muted); letter-spacing: 2px; }
   .footer-links { display: flex; gap: 24px; list-style: none; }
-  .footer-links a {
-    color: var(--text-muted); text-decoration: none;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s ease;
-  }
+  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; transition: color 0.3s ease; }
   .footer-links a:hover { color: var(--orange); }
 
-  /* ─── REVEAL ─── */
   .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -554,7 +360,6 @@
   </ul>
 </nav>
 
-<!-- Header -->
 <header class="page-header">
   <div class="header-bg-text">TALK</div>
   <p class="page-tag">// Let's Connect — Open for Projects</p>
@@ -562,15 +367,12 @@
   <p class="page-desc">[ Add a personal invitation. Why should someone reach out? What kind of projects do you love? ]</p>
 </header>
 
-<!-- Contact Layout -->
 <section class="contact-section">
 
-  <!-- Left: Info -->
   <div class="contact-info reveal">
     <div class="section-label">Direct Lines</div>
     <h2 class="section-title">REACH<br><span style="color:var(--orange)">OUT</span></h2>
     <p class="contact-intro">[ Write a personal, warm message inviting people to connect. Mention your response time and enthusiasm for new projects. ]</p>
-
     <div class="contact-details">
       <a href="mailto:hello@vxpeinjected.com" class="contact-detail">
         <div class="detail-icon">✉</div>
@@ -583,41 +385,24 @@
         <div class="detail-icon">💬</div>
         <div>
           <div class="detail-label">Discord / DM</div>
-          <div class="detail-value">[ Your Discord / Social handle ]</div>
+          <div class="detail-value">[ Your Discord handle ]</div>
         </div>
       </a>
-      <a href="#" class="contact-detail">
-        <div class="detail-icon">🔗</div>
-        <div>
-          <div class="detail-label">Portfolio / Link</div>
-          <div class="detail-value">vxpeinjected.vercel.app</div>
-        </div>
-      </a>
-      <a href="#" class="contact-detail">
+      <div class="contact-detail">
         <div class="detail-icon">⏱</div>
         <div>
           <div class="detail-label">Response Time</div>
           <div class="detail-value">Usually within [ X hours ]</div>
         </div>
-      </a>
+      </div>
     </div>
-
     <div class="availability">
       <span class="avail-dot"></span>
       <span class="avail-label">Currently Available</span>
-      <p class="avail-desc">[ State your current availability. Are you free for new projects? Taking on limited spots? Full-time available? ]</p>
-    </div>
-
-    <div class="social-links">
-      <a href="#" class="social-link" title="Twitter / X">𝕏</a>
-      <a href="#" class="social-link" title="Instagram">▣</a>
-      <a href="#" class="social-link" title="GitHub">⌥</a>
-      <a href="#" class="social-link" title="LinkedIn">in</a>
-      <a href="#" class="social-link" title="Discord">◈</a>
+      <p class="avail-desc">[ State your current availability. Are you free for new projects? Taking on limited spots? ]</p>
     </div>
   </div>
 
-  <!-- Right: Form -->
   <div class="contact-form-wrap">
     <div class="form-title">SEND A MESSAGE</div>
     <p class="form-subtitle">[ Fill in the form and I'll get back to you within [ X hours ]. No spam, no bots. ]</p>
@@ -626,83 +411,63 @@
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Your Name *</label>
-          <input type="text" class="form-input" placeholder="John Doe" required>
+          <input type="text" class="form-input" id="fieldName" placeholder="John Doe" required>
         </div>
         <div class="form-group">
           <label class="form-label">Your Email *</label>
-          <input type="email" class="form-input" placeholder="you@example.com" required>
+          <input type="email" class="form-input" id="fieldEmail" placeholder="you@example.com" required>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Service Needed</label>
         <div class="service-grid">
-          <div>
-            <input type="radio" name="service" class="service-option" id="s1">
-            <label class="service-label" for="s1">[ Service 1 ]</label>
-          </div>
-          <div>
-            <input type="radio" name="service" class="service-option" id="s2">
-            <label class="service-label" for="s2">[ Service 2 ]</label>
-          </div>
-          <div>
-            <input type="radio" name="service" class="service-option" id="s3">
-            <label class="service-label" for="s3">[ Service 3 ]</label>
-          </div>
-          <div>
-            <input type="radio" name="service" class="service-option" id="s4">
-            <label class="service-label" for="s4">Not Sure Yet</label>
-          </div>
+          <div><input type="radio" name="service" class="service-option" id="s1" value="[ Service 1 ]"><label class="service-label" for="s1">[ Service 1 ]</label></div>
+          <div><input type="radio" name="service" class="service-option" id="s2" value="[ Service 2 ]"><label class="service-label" for="s2">[ Service 2 ]</label></div>
+          <div><input type="radio" name="service" class="service-option" id="s3" value="[ Service 3 ]"><label class="service-label" for="s3">[ Service 3 ]</label></div>
+          <div><input type="radio" name="service" class="service-option" id="s4" value="Not Sure Yet"><label class="service-label" for="s4">Not Sure Yet</label></div>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Budget Range</label>
         <div class="budget-grid">
-          <div>
-            <input type="radio" name="budget" class="budget-option" id="b1">
-            <label class="budget-label" for="b1">$XXX</label>
-          </div>
-          <div>
-            <input type="radio" name="budget" class="budget-option" id="b2">
-            <label class="budget-label" for="b2">$XXX</label>
-          </div>
-          <div>
-            <input type="radio" name="budget" class="budget-option" id="b3">
-            <label class="budget-label" for="b3">$XXX</label>
-          </div>
-          <div>
-            <input type="radio" name="budget" class="budget-option" id="b4">
-            <label class="budget-label" for="b4">Custom</label>
-          </div>
+          <div><input type="radio" name="budget" class="budget-option" id="b1" value="$XXX"><label class="budget-label" for="b1">$XXX</label></div>
+          <div><input type="radio" name="budget" class="budget-option" id="b2" value="$XXX"><label class="budget-label" for="b2">$XXX</label></div>
+          <div><input type="radio" name="budget" class="budget-option" id="b3" value="$XXX"><label class="budget-label" for="b3">$XXX</label></div>
+          <div><input type="radio" name="budget" class="budget-option" id="b4" value="Custom"><label class="budget-label" for="b4">Custom</label></div>
         </div>
       </div>
 
       <div class="form-group">
         <label class="form-label">Project Subject *</label>
-        <input type="text" class="form-input" placeholder="Brief project title or subject" required>
+        <input type="text" class="form-input" id="fieldSubject" placeholder="Brief project title or subject" required>
       </div>
 
       <div class="form-group">
         <label class="form-label">Tell Me More *</label>
-        <textarea class="form-textarea" placeholder="[ Describe your project. What do you need? What's the timeline? Any other details that would help me understand your vision? ]" required></textarea>
+        <textarea class="form-textarea" id="fieldMessage" placeholder="Describe your project — what do you need, timeline, any details that help..." required></textarea>
       </div>
 
-      <button type="submit" class="form-submit">
-        <span>Send Message</span>
-        <span>→</span>
+      <button type="submit" class="form-submit" id="submitBtn">
+        <span id="submitText">Send Message</span>
+        <span id="submitArrow">→</span>
       </button>
+
+      <div class="form-error" id="formError">
+        ⚠ Something went wrong. Please try emailing directly instead.
+      </div>
     </form>
 
     <div class="form-success" id="formSuccess">
       <div class="success-icon">✓</div>
       <div class="success-title">MESSAGE <span>SENT!</span></div>
-      <p class="success-msg">[ Your confirmation message here. When will you reply? Express excitement about the project. ]</p>
+      <p class="success-msg">[ Your confirmation message here. When will you reply? Express excitement. ]</p>
     </div>
   </div>
+
 </section>
 
-<!-- Ticker -->
 <div class="ticker-wrap">
   <div class="ticker">
     <div class="ticker-item">Let's Collaborate <span>✦</span></div>
@@ -718,7 +483,6 @@
   </div>
 </div>
 
-<!-- Location -->
 <section class="location-section">
   <div class="section-label reveal">Where I Am</div>
   <h2 class="section-title reveal">BASE OF<br><span style="color:var(--orange)">OPERATIONS</span></h2>
@@ -730,31 +494,14 @@
       </div>
     </div>
     <div class="location-info reveal">
-      <div class="location-item">
-        <div class="location-label">Based In</div>
-        <div class="location-value">[ Your City, Country ]</div>
-      </div>
-      <div class="location-item">
-        <div class="location-label">Timezone</div>
-        <div class="location-value">[ Your Timezone, e.g. GMT+1 / EST ]</div>
-      </div>
-      <div class="location-item">
-        <div class="location-label">Working Hours</div>
-        <div class="location-value">[ Your typical working hours ]</div>
-      </div>
-      <div class="location-item">
-        <div class="location-label">Working With</div>
-        <div class="location-value">Clients worldwide — remote collaboration is no problem.</div>
-      </div>
-      <div class="location-item">
-        <div class="location-label">Languages</div>
-        <div class="location-value">[ Languages you speak ]</div>
-      </div>
+      <div class="location-item"><div class="location-label">Based In</div><div class="location-value">[ Your City, Country ]</div></div>
+      <div class="location-item"><div class="location-label">Timezone</div><div class="location-value">[ Your Timezone ]</div></div>
+      <div class="location-item"><div class="location-label">Working Hours</div><div class="location-value">[ Your typical working hours ]</div></div>
+      <div class="location-item"><div class="location-label">Working With</div><div class="location-value">Clients worldwide — remote collaboration is no problem.</div></div>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-logo">Vxpe<span>Injected</span></div>
   <div class="footer-copy">© 2025 VxpeInjected. All rights reserved.</div>
@@ -767,34 +514,102 @@
 </footer>
 
 <script>
+  // ─── PASTE YOUR DISCORD WEBHOOK URL BELOW ───
+  const DISCORD_WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+
+  // ─── CURSOR ───
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
   function animateCursor() {
-    cursor.style.left = mx - 6 + 'px'; cursor.style.top = my - 6 + 'px';
-    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-    cursorRing.style.left = rx - 20 + 'px'; cursorRing.style.top = ry - 20 + 'px';
+    cursor.style.left = mx - 6 + 'px';
+    cursor.style.top = my - 6 + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    cursorRing.style.left = rx - 20 + 'px';
+    cursorRing.style.top = ry - 20 + 'px';
     requestAnimationFrame(animateCursor);
   }
   animateCursor();
-  document.querySelectorAll('a, button, input, textarea, label').forEach(el => {
+
+  document.querySelectorAll('a, button, label').forEach(el => {
     el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; cursorRing.style.transform = 'scale(1.5)'; });
     el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; cursorRing.style.transform = 'scale(1)'; });
   });
 
-  // Form submit
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    this.style.opacity = '0';
-    this.style.transition = 'opacity 0.4s ease';
-    setTimeout(() => {
-      this.style.display = 'none';
-      document.getElementById('formSuccess').classList.add('active');
-    }, 400);
+  // Hide custom cursor while typing in any input/textarea
+  document.querySelectorAll('input, textarea').forEach(field => {
+    field.addEventListener('focus', () => document.body.classList.add('is-typing'));
+    field.addEventListener('blur',  () => document.body.classList.remove('is-typing'));
   });
 
-  // Reveal
+  // ─── DISCORD WEBHOOK FORM ───
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn       = document.getElementById('submitBtn');
+    const btnText   = document.getElementById('submitText');
+    const btnArrow  = document.getElementById('submitArrow');
+    const errorEl   = document.getElementById('formError');
+
+    const name    = document.getElementById('fieldName').value.trim();
+    const email   = document.getElementById('fieldEmail').value.trim();
+    const subject = document.getElementById('fieldSubject').value.trim();
+    const message = document.getElementById('fieldMessage').value.trim();
+    const service = document.querySelector('input[name="service"]:checked')?.value || 'Not specified';
+    const budget  = document.querySelector('input[name="budget"]:checked')?.value  || 'Not specified';
+
+    // Loading state
+    btn.disabled = true;
+    btnText.textContent = 'Sending...';
+    btnArrow.textContent = '⏳';
+    errorEl.classList.remove('active');
+
+    const payload = {
+      username: 'VxpeInjected — Contact Form',
+      embeds: [{
+        title: `📬 New Inquiry: ${subject}`,
+        color: 0xFF5500,
+        fields: [
+          { name: '👤 Name',     value: name,    inline: true  },
+          { name: '📧 Email',    value: email,   inline: true  },
+          { name: '🛠 Service',  value: service, inline: true  },
+          { name: '💰 Budget',   value: budget,  inline: true  },
+          { name: '💬 Message',  value: message, inline: false },
+        ],
+        footer: { text: 'vxpeinjected.vercel.app' },
+        timestamp: new Date().toISOString()
+      }]
+    };
+
+    try {
+      const res = await fetch(DISCORD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok || res.status === 204) {
+        this.style.opacity = '0';
+        this.style.transition = 'opacity 0.4s ease';
+        setTimeout(() => {
+          this.style.display = 'none';
+          document.getElementById('formSuccess').classList.add('active');
+        }, 400);
+      } else {
+        throw new Error('Status ' + res.status);
+      }
+    } catch (err) {
+      console.error(err);
+      errorEl.classList.add('active');
+      btn.disabled = false;
+      btnText.textContent = 'Send Message';
+      btnArrow.textContent = '→';
+    }
+  });
+
+  // ─── REVEAL ───
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
