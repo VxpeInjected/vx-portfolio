@@ -1,7 +1,0 @@
-{
-  "cleanUrls": true,
-  "redirects": [
-    { "source": "/pricing", "destination": "/", "permanent": true },
-    { "source": "/contact", "destination": "/#contact", "permanent": true }
-  ]
-}
