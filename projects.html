@@ -7,64 +7,137 @@
 <meta name="description" content="Projects by VxpeInjected that don't require an NDA.">
 <meta name="theme-color" content="#15161b">
 <link rel="icon" type="image/png" href="favicon.png">
-<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#15161b; --surface:#1b1c23; --surface2:#21222a; --line:#2b2c36; --line2:#3a3b47;
+  --text:#e6e6ea; --muted:#9091a0; --white:#fff; --accent:#5b8cff; --accent-ink:#0d1220;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);scroll-behavior:smooth}
+body{color:var(--text);font:16px/1.65 "Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+.mono{font-family:"Geist Mono",ui-monospace,Menlo,Consolas,monospace}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:10;background:rgba(21,22,27,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:700;font-size:18px;color:var(--white);letter-spacing:-.01em}
+.logo b{color:var(--accent)}
+.links{display:flex;align-items:center;gap:6px}
+.links a{padding:8px 14px;border-radius:8px;color:var(--muted);font-size:15px;font-weight:500}
+.links a:hover,.links a.on{color:var(--white);background:var(--surface2)}
+.links a.btn{margin-left:8px;background:var(--accent);color:var(--accent-ink);font-weight:600}
+.links a.btn:hover{background:#7aa2ff}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:9px;font-weight:600;font-size:15px;border:1px solid var(--line2);color:var(--white);background:var(--surface)}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:#7aa2ff;border-color:#7aa2ff}
+
+/* hero */
+.hero{padding:96px 0 56px}
+.eyebrow{font-size:13px;color:var(--accent);margin-bottom:18px}
+.hero h1{font-size:clamp(38px,6vw,64px);line-height:1.06;letter-spacing:-.03em;color:var(--white);font-weight:700;max-width:760px}
+.hero p.sub{margin-top:20px;max-width:560px;color:var(--muted);font-size:18px}
+.hero .cta{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-top:56px}
+.stats div{padding:24px 28px;border-right:1px solid var(--line)}
+.stats div:last-child{border-right:0}
+.stats strong{display:block;font-size:30px;line-height:1.1;color:var(--white);letter-spacing:-.02em}
+.stats span{color:var(--muted);font-size:14px}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.chips span{padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--muted);background:var(--surface)}
+
+/* sections */
+section{padding:56px 0}
+.head{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px;gap:16px}
+h2{font-size:28px;letter-spacing:-.02em;color:var(--white);line-height:1.2}
+.head a{color:var(--accent);font-size:15px;font-weight:500}
+.head a:hover{text-decoration:underline}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.card:hover{border-color:var(--line2)}
+.card .top{height:110px;background:var(--surface2);border-bottom:1px solid var(--line);display:flex;align-items:flex-end;padding:16px 20px;position:relative}
+.card .top::before{content:attr(data-n);position:absolute;right:20px;top:14px;font:600 13px "Geist Mono",ui-monospace,monospace;color:var(--line2)}
+.card .top em{font-style:normal;font-size:12px;color:var(--accent);background:rgba(91,140,255,.1);border:1px solid rgba(91,140,255,.25);padding:3px 10px;border-radius:999px}
+.card .body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{font-size:19px;color:var(--white);letter-spacing:-.01em}
+.card p{color:var(--muted);font-size:15px}
+.tags{margin-top:auto;padding-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font:12px "Geist Mono",ui-monospace,monospace;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 8px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.two p{color:var(--muted);margin-top:14px}
+.two p:first-of-type{margin-top:0}
+
+.quote{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:28px}
+.quote p{color:var(--text);font-size:18px;line-height:1.6}
+.quote cite{display:block;margin-top:16px;font-style:normal;color:var(--muted);font-size:14px}
+
+.contact{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:36px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.contact p{color:var(--muted);margin-top:6px}
+.contact .rows{display:flex;gap:12px;flex-wrap:wrap}
+
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:40px;padding:40px 0 48px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+footer h4{color:var(--white);font-size:14px;margin-bottom:10px}
+footer a{display:block;padding:2px 0}
+footer a:hover{color:var(--white)}
+footer .copy{width:100%;padding-top:24px;border-top:1px solid var(--line)}
+
+@media(max-width:760px){
+  .grid,.two{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .stats div{border-right:0;border-bottom:1px solid var(--line)}
+  .stats div:last-child{border-bottom:0}
+  .hero{padding-top:64px}
+  .links a:not(.btn){padding:8px 10px}
+}
+</style>
 </head>
 <body>
-<div class="wrap">
-
-<header class="top">
-  <a class="name" href="index.html">VxpeInjected</a>
-  <nav>
-    <a href="projects.html" aria-current="page">Projects</a>
-    <a href="index.html#contact">Contact</a>
+<header class="nav"><div class="wrap">
+  <a class="logo" href="index.html">Vxpe<b>Injected</b></a>
+  <nav class="links">
+    <a href="index.html">Home</a>
+    <a href="projects.html" class="on">Projects</a>
+    <a class="btn" href="mailto:businessemail.rv@gmail.com">Email me</a>
   </nav>
-</header>
+</div></header>
 
 <main>
-  <h1>Projects</h1>
-  <p class="lead">Some of the larger things I've worked on that didn't need an NDA.</p>
-
-  <div>
-    <div class="project">
-      <h3>Republic At War</h3>
-      <p>A large game designed as a morph RPG, currently in progress. It has a big staff team and a community waiting on it, and I'm the sole developer.</p>
-      <div class="tags">game development, community, nonprofit</div>
-    </div>
-
-    <div class="project">
-      <h3>coldd Marketplace Discord Bot</h3>
-      <p>An extensive Discord bot for coldd. People post things they want to buy or sell, and post moderators approve and log them.</p>
-      <div class="tags">discord.py, marketplace, moderation tools</div>
-    </div>
-
-    <div class="project">
-      <h3>Bytecraft Studios</h3>
-      <p>A store I started from nothing, selling ready-made Roblox assets to developers. I sold it for around 12k Robux after it reached about 150 Discord members and 50+ products.</p>
-      <div class="tags">project creation, business</div>
-    </div>
-
-    <div class="project">
-      <h3>Exclusive Findings</h3>
-      <p>I ran this company for its owner for several weeks. Over that time user activity in the server went up 11.6% and the join rate went up 45.6%.</p>
-      <div class="tags">server management, growth</div>
-    </div>
-
-    <div class="project">
-      <h3>Roblox Chat UI Remake</h3>
-      <p>A rebuild of the Roblox chat interface.</p>
-      <div class="tags">roblox, ui</div>
-    </div>
+<div class="wrap">
+  <div class="hero" style="padding-bottom:16px">
+    <p class="eyebrow mono">projects</p>
+    <h1>Things I've built.</h1>
+    <p class="sub">Some of the larger projects I've worked on that didn't need an NDA.</p>
   </div>
-
-  <h2>kind words</h2>
-  <blockquote>
-    He's shown exceptional work, great effort on the coding side of development and in finding people to help him. He has put together a wonderful team of devs and staff.
-    <footer>Rouge, Community Manager at RaW Development Studios</footer>
-  </blockquote>
+  <section style="padding-top:24px">
+    <div class="grid"><article class="card"><div class="top" data-n="01"><em>Game development</em></div><div class="body"><h3>Republic At War</h3><p>A large game designed as a morph RPG, currently in progress. It has a big staff team and a community waiting on it, and I'm the sole developer.</p><div class="tags"><span>game dev</span><span>community</span><span>nonprofit</span></div></div></article><article class="card"><div class="top" data-n="02"><em>Discord bot</em></div><div class="body"><h3>coldd Marketplace Bot</h3><p>An extensive Discord bot for coldd. People post things they want to buy or sell, and post moderators approve and log them.</p><div class="tags"><span>discord.py</span><span>marketplace</span><span>moderation</span></div></div></article><article class="card"><div class="top" data-n="03"><em>Project creation</em></div><div class="body"><h3>Bytecraft Studios</h3><p>A store I started from nothing, selling ready-made Roblox assets to developers. Sold for around 12k Robux after reaching about 150 Discord members and 50+ products.</p><div class="tags"><span>business</span><span>roblox assets</span></div></div></article><article class="card"><div class="top" data-n="04"><em>Project management</em></div><div class="body"><h3>Exclusive Findings</h3><p>I ran this company for its owner for several weeks. In that time server activity went up 11.6% and the join rate went up 45.6%.</p><div class="tags"><span>server management</span><span>growth</span></div></div></article><article class="card"><div class="top" data-n="05"><em>UI development</em></div><div class="body"><h3>Roblox Chat UI Remake</h3><p>A rebuild of the Roblox chat interface.</p><div class="tags"><span>roblox</span><span>ui</span></div></div></article></div>
+  </section>
+  <section>
+    <div class="quote">
+      <p>He's shown exceptional work, great effort on the coding side of development and in finding people to help him. He has put together a wonderful team of devs and staff.</p>
+      <cite>Rouge, Community Manager at RaW Development Studios</cite>
+    </div>
+  </section>
+</div>
 </main>
 
-<footer class="bottom">&copy; 2026 VxpeInjected</footer>
-
-</div>
+<footer><div class="wrap">
+  <div><a class="logo" href="index.html">Vxpe<b>Injected</b></a><p style="margin-top:8px;max-width:260px">Programmer and UI/UX developer based in England.</p></div>
+  <div><h4>Pages</h4><a href="index.html">Home</a><a href="projects.html">Projects</a></div>
+  <div><h4>Contact</h4><a href="mailto:businessemail.rv@gmail.com">Email</a><a>Discord: @vxpe.injected</a></div>
+  <div class="copy">&copy; 2026 VxpeInjected</div>
+</div></footer>
 </body>
 </html>
