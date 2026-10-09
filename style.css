@@ -1,0 +1,123 @@
+:root {
+  --bg: #15161b;
+  --line: #2a2b33;
+  --text: #d9d9de;
+  --muted: #8a8b95;
+  --link: #f0f0f3;
+  --accent: #6f93e6;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  color: var(--text);
+  font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+a:hover { text-decoration-color: var(--accent); }
+
+header.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
+}
+header.top .name {
+  color: var(--link);
+  font-weight: 600;
+  text-decoration: none;
+}
+header.top nav a {
+  margin-left: 20px;
+  color: var(--muted);
+  text-decoration: none;
+}
+header.top nav a:hover,
+header.top nav a[aria-current] { color: var(--link); }
+
+main { padding: 56px 0 24px; }
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--link);
+}
+h2 {
+  margin: 56px 0 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+p { margin: 0 0 16px; }
+.lead { color: var(--muted); margin-bottom: 28px; }
+
+.project {
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+.project:last-child { border-bottom: 1px solid var(--line); }
+.project h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--link);
+}
+.project p { margin: 0; color: var(--text); }
+.project .tags {
+  margin-top: 8px;
+  font: 12px ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--muted);
+}
+
+dl.contact { margin: 0; }
+dl.contact div {
+  display: flex;
+  gap: 16px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+dl.contact div:last-child { border-bottom: 1px solid var(--line); }
+dl.contact dt { width: 90px; color: var(--muted); flex-shrink: 0; }
+dl.contact dd { margin: 0; }
+
+blockquote {
+  margin: 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--line);
+  color: var(--muted);
+}
+blockquote footer { margin-top: 8px; font-size: 14px; }
+
+footer.bottom {
+  margin-top: 64px;
+  padding: 24px 0 40px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 520px) {
+  main { padding-top: 40px; }
+  h1 { font-size: 24px; }
+  header.top nav a { margin-left: 14px; }
+}

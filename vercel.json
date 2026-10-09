@@ -1,8 +1,7 @@
 {
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/projects", "destination": "/projects.html" },
-    { "source": "/pricing", "destination": "/pricing.html" },
-    { "source": "/contact", "destination": "/contact.html" }
+  "redirects": [
+    { "source": "/pricing", "destination": "/", "permanent": true },
+    { "source": "/contact", "destination": "/#contact", "permanent": true }
   ]
 }
