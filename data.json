@@ -44,8 +44,14 @@
     {
       "id": "t5",
       "name": "UI / UX",
-      "desc": "player-first design",
+      "desc": "beautiful design",
       "icon": "cursor"
+    },
+    {
+      "id": "xmv3unvrx0bn",
+      "name": "HTML & CSS",
+      "desc": "site development",
+      "icon": "layers"
     }
   ],
   "gallery": []
