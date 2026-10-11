@@ -30,7 +30,20 @@
         "Components v2"
       ],
       "link": "",
-      "image": "uploads/mv43hfo1-image-2026-10-11-182619483.jpg"
+      "images": [
+        {
+          "src": "uploads/mv442o1jzcj-image-2026-10-11-184250135.jpg",
+          "caption": "Initial Prompt"
+        },
+        {
+          "src": "uploads/mv4435o40h0-image-2026-10-11-184312971.jpg",
+          "caption": "Full Background Check"
+        },
+        {
+          "src": "uploads/mv444fy1k46-image-2026-10-11-184412948.jpg",
+          "caption": "Final Result"
+        }
+      ]
     }
   ],
   "toolkit": [
