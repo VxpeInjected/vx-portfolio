@@ -21,7 +21,8 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.4;stroke
 ::selection{background:var(--ink);color:#fff}
 
 /* nav */
-.navwrap{max-width:784px;margin:0 auto;padding:0 12px;position:sticky;top:16px;z-index:30;margin-top:28px}
+.navwrap{max-width:none;margin:0;padding:18px 12px 12px;position:sticky;top:0;z-index:30;background:linear-gradient(var(--bg) 78%,rgba(255,255,255,0))}
+.navwrap .bar{max-width:760px;margin:0 auto}
 .bar{display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 16px;background:rgba(251,251,249,.9);border:1px solid var(--line);backdrop-filter:blur(8px);transition:box-shadow .3s}
 .bar.stuck{box-shadow:0 6px 24px -14px rgba(0,0,0,.25)}
 .logo{display:grid;place-items:center;width:26px;height:26px;background:var(--ink);color:#fff;font-size:10px;font-weight:700;letter-spacing:.04em;transition:transform .4s var(--ease),background .25s,color .25s,box-shadow .25s}
@@ -36,7 +37,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.4;stroke
 .col{max-width:784px;margin:0 auto;padding:0 29px}
 
 /* hero */
-.hero{padding-top:84px}
+.hero{padding-top:72px}
 .status{display:flex;align-items:center;gap:8px;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .dot{position:relative;width:6px;height:6px;border-radius:50%;background:var(--ink)}
 .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--ink);opacity:0;animation:ping 2.4s infinite}
