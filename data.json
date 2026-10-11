@@ -20,7 +20,7 @@
       "id": "xmv3upx3d01q",
       "title": "CUSA - Background Check Bot",
       "category": "programming",
-      "meta": "Discord Bot for the Crimson Raiders",
+      "meta": "Discord Bot developed in Python for CUSA",
       "note": "Crimson Raiders",
       "desc": "This background check bot system was one of many I did for this bot, mostly to automate a bunch of HICOM duties.",
       "tags": [
@@ -30,7 +30,7 @@
         "Components v2"
       ],
       "link": "",
-      "image": "uploads/mv435ild-image-2026-10-11-181703379.jpg"
+      "image": "uploads/mv43azh1-image-2026-10-11-182118569.jpg"
     }
   ],
   "toolkit": [
