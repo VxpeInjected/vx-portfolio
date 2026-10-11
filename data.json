@@ -1,19 +1,19 @@
 {
   "site": {
     "name": "vx.injected",
-    "logo": "VX",
-    "badge": "programmer & UI designer",
+    "logo": "vx",
+    "badge": "UI designer & programmer",
     "status": "open for commissions",
     "statusOn": false,
-    "tagline": "I build systems and interfaces.\nRoblox programming, bots and thoughtful UI design.",
-    "intro": "Nine years of programming and six of UI/UX. Mostly Luau, Python and JavaScript. Based in England.",
+    "tagline": "I build systems and user-interfaces.\nRoblox programming, discord bots, and the occassional UI.",
+    "intro": "Nine years of programming and six of UI/UX. Mostly Luau, Python and JavaScript.",
     "email": "businessemail.rv@gmail.com",
     "discord": "vxpe.injected",
     "discordUrl": "",
-    "toolkitBlurb": "The tools behind the pixels and the play.",
-    "galleryBlurb": "A little space for screens, concepts, and experiments.",
+    "toolkitBlurb": "What I've learnt to do in my years as a programmer.",
+    "galleryBlurb": "Some of my work and snapshots of what I do.",
     "contactBlurb": "Have a project in mind? Let's talk. DM me or email me.",
-    "footerNote": "\" I code shit. "
+    "footerNote": "I code stuff. Take a look! "
   },
   "projects": [],
   "toolkit": [
