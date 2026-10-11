@@ -15,7 +15,24 @@
     "contactBlurb": "Have a project in mind? Let's talk. DM me or email me.",
     "footerNote": "I code stuff. Take a look! "
   },
-  "projects": [],
+  "projects": [
+    {
+      "id": "xmv3upx3d01q",
+      "title": "CUSA - Background Check Bot",
+      "category": "programming",
+      "meta": "Discord Bot for the Crimson Raiders",
+      "note": "Crimson Raiders",
+      "desc": "This background check bot system was one of many I did for this bot, mostly to automate a bunch of HICOM duties.",
+      "tags": [
+        "CUSA",
+        "Discord Bot",
+        "discord.py",
+        "Components v2"
+      ],
+      "link": "",
+      "image": "uploads/mv435ild-image-2026-10-11-181703379.jpg"
+    }
+  ],
   "toolkit": [
     {
       "id": "t1",
