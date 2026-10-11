@@ -79,6 +79,11 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.4;stroke
 .gate .err{height:14px;margin-top:10px;font-size:10px;color:#b3261e}
 .shake{animation:shake .4s}
 @keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.mis{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:10px}
+.mi{border:1px solid var(--line);padding:8px;display:grid;gap:8px;animation:in .35s var(--ease)}
+.mi .th{width:100%}
+.mi .mc{display:flex;gap:6px}
+.rw{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 @media(max-width:640px){.grid2{grid-template-columns:1fr}.imgf{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -137,7 +142,8 @@ $("#lockout").addEventListener("click",()=>{sessionStorage.removeItem("vx_auth")
 const CFG=()=>Object.assign({repo:"VxpeInjected/vx-portfolio",branch:"main",token:""},JSON.parse(localStorage.getItem("vx_cfg")||"{}"));
 const setCFG=o=>localStorage.setItem("vx_cfg",JSON.stringify(Object.assign(CFG(),o)));
 const SITE_DEFAULT={name:"vx.injected",logo:"VX",badge:"programmer & UI designer",status:"open for commissions",statusOn:true,tagline:"I build systems and interfaces.\nRoblox programming, bots and thoughtful UI design.",intro:"",email:"",discord:"",discordUrl:"",toolkitBlurb:"",galleryBlurb:"",contactBlurb:"",footerNote:""};
-function norm(d){d=d||{};return{site:Object.assign({},SITE_DEFAULT,d.site||{}),projects:d.projects||[],toolkit:d.toolkit||[],gallery:d.gallery||[]}}
+function normP(p){if(!Array.isArray(p.images))p.images=p.image?[{src:p.image,caption:""}]:[];delete p.image;return p}
+function norm(d){d=d||{};return{site:Object.assign({},SITE_DEFAULT,d.site||{}),projects:(d.projects||[]).map(normP),toolkit:d.toolkit||[],gallery:d.gallery||[]}}
 async function boot(){
   let live=null;
   try{const r=await fetch("data.json?"+Date.now(),{cache:"no-store"});if(r.ok)live=await r.json()}catch(e){}
@@ -160,8 +166,8 @@ addEventListener("resize",ink);document.fonts&&document.fonts.ready.then(ink);
 /* ---------- render ---------- */
 const SCHEMA={
   projects:{label:"project",title:i=>i.title||"untitled project",sub:i=>i.category||"",fields:[
-    ["title","title","text"],["category","category","select",["programming","ui design"]],["meta","meta line (e.g. Gameplay systems / Luau)","text"],["note","small note (e.g. 2026)","text"],["link","link (optional)","text"],["tags","tags (comma separated)","tags"],["desc","description","area"],["image","screenshot","image"]],
-    blank:()=>({id:uid(),title:"",category:"programming",meta:"",note:"",desc:"",tags:[],link:"",image:""})},
+    ["title","title","text"],["category","category","select",["programming","ui design"]],["meta","meta line (e.g. Gameplay systems / Luau)","text"],["note","small note (e.g. 2026)","text"],["link","link (optional)","text"],["tags","tags (comma separated)","tags"],["desc","description","area"],["images","screenshots / pages (shown as a gallery in the popup)","images"]],
+    blank:()=>({id:uid(),title:"",category:"programming",meta:"",note:"",desc:"",tags:[],link:"",images:[]})},
   toolkit:{label:"tool",title:i=>i.name||"untitled tool",sub:i=>i.icon||"",fields:[
     ["name","name","text"],["desc","short description","text"],["icon","icon","select",["cube","code","pen","cursor","layers","terminal","globe"]]],
     blank:()=>({id:uid(),name:"",desc:"",icon:"cube"})},
@@ -183,6 +189,11 @@ function fieldHTML(col,idx,it,f){
   if(type==="select")return `<label class="fld"><span>${label}</span><select ${a}>${opts.map(o=>`<option ${o===val?"selected":""}>${o}</option>`).join("")}</select></label>`;
   if(type==="area")return `<label class="fld"><span>${label}</span><textarea ${a}>${esc(val)}</textarea></label>`;
   if(type==="tags")return `<label class="fld"><span>${label}</span><input type="text" ${a} data-tags="1" value="${esc((val||[]).join(", "))}"></label>`;
+  if(type==="images"){
+    const arr=it.images||[],b=(act,n,t,dis)=>`<button class="b sm${act==="imgx"?" dng":""}" data-act="${act}" data-col="${col}" data-idx="${idx}" data-ii="${n}" ${dis?"disabled":""}>${t}</button>`;
+    return `<div class="fld"><span>${label}</span><div class="mis">${arr.map((m,n)=>{const src=previews[m.src]||m.src;return `<div class="mi"><div class="th">${src?`<img src="${esc(src)}" onerror="this.remove()">`:"no image"}</div><input class="tx" type="text" placeholder="caption (optional)" data-col="${col}" data-idx="${idx}" data-ii="${n}" value="${esc(m.caption||"")}"><div class="mc">${b("imgl",n,"←",n===0)}${b("imgr",n,"→",n===arr.length-1)}${b("imgx",n,"remove")}</div></div>`}).join("")}</div>
+    <div class="rw"><button class="b sm" data-act="addimgs" data-col="${col}" data-idx="${idx}">+ upload images</button><span class="hint" id="up-${col}-${idx}"></span></div>
+    <div class="rw" style="margin-top:8px"><input class="tx" style="flex:1;min-width:160px;width:auto" id="url-${col}-${idx}" placeholder="or paste an image URL"><button class="b sm" data-act="addurl" data-col="${col}" data-idx="${idx}">add</button></div></div>`}
   if(type==="image"){const src=previews[val]||val;return `<div class="imgf"><div class="th">${src?`<img src="${esc(src)}" onerror="this.remove()">`:"no image"}</div><div class="r"><div class="row"><button class="b sm" data-act="upload" data-col="${col}" data-idx="${idx}">upload image</button><button class="b sm dng" data-act="rmimg" data-col="${col}" data-idx="${idx}">remove</button></div><input class="tx" type="text" ${a} placeholder="or paste an image URL" value="${esc(val)}"><span class="hint" id="up-${col}-${idx}"></span></div></div>`}
   return `<label class="fld"><span>${label}</span><input type="text" ${a} value="${esc(val)}"></label>`;
 }
@@ -221,6 +232,7 @@ function pubHTML(){
 document.addEventListener("input",e=>{
   const t=e.target;
   if(t.dataset.cfg){setCFG({[t.dataset.cfg]:t.value.trim()});return}
+  if(t.dataset.ii!==undefined&&t.dataset.col){const m=D[t.dataset.col][+t.dataset.idx].images[+t.dataset.ii];if(m){m.caption=t.value;setDirty(true)}return}
   const col=t.dataset.col;if(!col||!t.dataset.key)return;
   const val=t.type==="checkbox"?t.checked:t.value;
   if(col==="site"){D.site[t.dataset.key]=val}
@@ -243,6 +255,10 @@ document.addEventListener("click",async e=>{
   else if(act==="discard"){localStorage.removeItem("vx_draft");dirty=false;bn="";D=norm(window._live);setDirty(false);render();toast("draft discarded")}
   else if(act==="rmimg"){D[col][i].image="";setDirty(true);render()}
   else if(act==="upload"){pickImage(col,i)}
+  else if(act==="addimgs"){pickImages(col,i)}
+  else if(act==="addurl"){const f=document.getElementById(`url-${col}-${i}`),v=(f.value||"").trim();if(!/^https?:\/\//i.test(v)){toast("paste a full https:// image link",true);return}D[col][i].images.push({src:v,caption:""});setDirty(true);render()}
+  else if(act==="imgl"||act==="imgr"){const ii=+b.dataset.ii,A=D[col][i].images,j=act==="imgl"?ii-1:ii+1;if(j>=0&&j<A.length){[A[ii],A[j]]=[A[j],A[ii]];setDirty(true);render()}}
+  else if(act==="imgx"){D[col][i].images.splice(+b.dataset.ii,1);setDirty(true);render()}
   else if(act==="test"){testConn()}
   else if(act==="export"){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(D,null,2)],{type:"application/json"}));a.download="data.json";a.click()}
   else if(act==="forget"){setCFG({token:""});render();toast("token removed from this browser")}
@@ -288,25 +304,42 @@ $("#save").addEventListener("click",async()=>{
 });
 
 /* ---------- image upload ---------- */
-function pickImage(col,i){
+async function processUpload(file){
+  const url=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)});
+  const im=await new Promise((res,rej)=>{const x=new Image();x.onload=()=>res(x);x.onerror=rej;x.src=url});
+  const sc=Math.min(1,1600/Math.max(im.width,im.height)),cv=document.createElement("canvas");
+  cv.width=Math.round(im.width*sc);cv.height=Math.round(im.height*sc);
+  const cx=cv.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,cv.width,cv.height);cx.drawImage(im,0,0,cv.width,cv.height);
+  const out=cv.toDataURL("image/jpeg",.88),b64=out.split(",")[1];
+  const slug=(file.name.replace(/\.[^.]+$/,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"image").slice(0,40);
+  const path=`uploads/${Date.now().toString(36)}${Math.random().toString(36).slice(2,5)}-${slug}.jpg`;
+  await putFile(path,b64,"Upload image",true);
+  previews[path]=out;return path;
+}
+function pickFiles(multiple,cb){
   if(!CFG().token){toast("add your github token under publishing first",true);return}
-  const f=document.createElement("input");f.type="file";f.accept="image/*";
-  f.onchange=async()=>{
-    const file=f.files[0];if(!file)return;
+  const f=document.createElement("input");f.type="file";f.accept="image/*";f.multiple=multiple;
+  f.onchange=()=>{if(f.files.length)cb([...f.files])};f.click();
+}
+function pickImage(col,i){
+  pickFiles(false,async files=>{
     const h=document.getElementById(`up-${col}-${i}`);if(h)h.textContent="uploading…";
+    try{const path=await processUpload(files[0]);D[col][i].image=path;setDirty(true);render();toast("image uploaded")}
+    catch(e){if(h)h.textContent="";toast(e instanceof TypeError?"couldn't reach github.":e.message||"upload failed",true)}
+  });
+}
+function pickImages(col,i){
+  pickFiles(true,async files=>{
+    const h=document.getElementById(`up-${col}-${i}`);let done=0;
     try{
-      const url=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)});
-      const im=await new Promise((res,rej)=>{const x=new Image();x.onload=()=>res(x);x.onerror=rej;x.src=url});
-      const sc=Math.min(1,1600/Math.max(im.width,im.height)),cv=document.createElement("canvas");
-      cv.width=Math.round(im.width*sc);cv.height=Math.round(im.height*sc);
-      const cx=cv.getContext("2d");cx.fillStyle="#fff";cx.fillRect(0,0,cv.width,cv.height);cx.drawImage(im,0,0,cv.width,cv.height);
-      const out=cv.toDataURL("image/jpeg",.88),b64=out.split(",")[1];
-      const slug=(file.name.replace(/\.[^.]+$/,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"image").slice(0,40);
-      const path=`uploads/${Date.now().toString(36)}-${slug}.jpg`;
-      await putFile(path,b64,"Upload image",true);
-      previews[path]=out;D[col][i].image=path;setDirty(true);render();toast("image uploaded");
-    }catch(e){if(h)h.textContent="";toast(e.message||"upload failed",true)}
-  };f.click();
+      for(const file of files){
+        if(h)h.textContent=`uploading ${done+1} of ${files.length}…`;
+        const path=await processUpload(file);
+        D[col][i].images.push({src:path,caption:""});done++;setDirty(true);
+      }
+      render();toast(done+(done===1?" image":" images")+" uploaded");
+    }catch(e){if(done){render()}else if(h)h.textContent="";toast(e instanceof TypeError?"couldn't reach github.":e.message||"upload failed",true)}
+  });
 }
 if(sessionStorage.getItem("vx_auth")===HASH)enter();
 else setTimeout(()=>$("#gi").focus(),100);
