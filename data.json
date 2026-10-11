@@ -18,11 +18,11 @@
   "projects": [
     {
       "id": "xmv3upx3d01q",
-      "title": "CUSA - Background Check Bot",
+      "title": "[CUSA] Crimson Raiders Discord Bot",
       "category": "programming",
       "meta": "Discord Bot developed in Python for CUSA",
       "note": "Crimson Raiders",
-      "desc": "This background check bot system was one of many I did for this bot, mostly to automate a bunch of HICOM duties.",
+      "desc": "This background check bot system was one of many I did for this bot, mostly to automate a bunch of HICOM duties. It works essentially by going into an empty Roblox alt account via that account's token, and searching up the user inputted. It checks things like Account Age, Friend count, Badge count, Group count, and then goes through all of the user's friends - parsing their names to find any names similar to the original account name to see if they can be flagged as alt accounts. For example, if robloxuser was friends with robloxuser_alt, the bot would detect that and flag it as a suspicious alternative account. The bot will allow for a count of one maximum red flag before failing the user's background check - and logging it in a private channel for HICOM to see.",
       "tags": [
         "CUSA",
         "Discord Bot",
@@ -30,7 +30,7 @@
         "Components v2"
       ],
       "link": "",
-      "image": "uploads/mv43azh1-image-2026-10-11-182118569.jpg"
+      "image": "uploads/mv43hfo1-image-2026-10-11-182619483.jpg"
     }
   ],
   "toolkit": [
