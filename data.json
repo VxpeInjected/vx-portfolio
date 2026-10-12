@@ -44,6 +44,31 @@
           "caption": "Final Result"
         }
       ]
+    },
+    {
+      "id": "xmv5j6n06ojt",
+      "title": "coldd Development Marketplace Bot",
+      "category": "programming",
+      "meta": "Discord Bot developed in Python for coldd",
+      "note": "Based off of HiddenDevs' marketplace bot",
+      "desc": "This was a very extensive system I did for a company I co-ran, \"coldd Development\". It spanned about 3k+ lines of code in Visual Studio Code prior to its optimization, created in mid-2024. It was essentially a remake of HiddenDev's (.gg/hd) old marketplace posting system bot. It entailed some simple devex commands (/devex-robux, /devex-currency), etc. The main premise of the bot was the very extensive marketplace system, which had three options: \"Hiring\", \"For-Hire\", and \"Tutorial\". Tutorial walked the user through how to use the system, although, I will admit it was improved later. Hiring and For-Hire began the post preview system, [Fig.1] which helped the user customise their post before sending it to mods for approval. The customization system included things like a description, title, a contact method, a payment type, a role (Scripter, Builder, etc) and images. After the user was satisfied with their creation, they'd submit it for review with an ID - and moderators would either deny or approve it with a custom embed [Fig.2]. All in all, for slightly earlier in my discord bot coding existence, it was the hardest bot I've ever made and pushed me far out of my comfort zone (my skills are vastly different compared to 2024).",
+      "tags": [
+        "Old",
+        "Discord Bot",
+        "discord.py",
+        "Components v1"
+      ],
+      "link": "https://chronlemon.my.canva.site",
+      "images": [
+        {
+          "src": "uploads/mv5l001jj3e-image-2026-10-12-192425337.jpg",
+          "caption": ""
+        },
+        {
+          "src": "uploads/mv5la0c5k4r-image-2026-10-12-193212285.jpg",
+          "caption": ""
+        }
+      ]
     }
   ],
   "toolkit": [
