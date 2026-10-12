@@ -71,6 +71,28 @@
       ]
     },
     {
+      "id": "xmv5oegdd6qq",
+      "title": "Advanced Discord Embed Builder",
+      "category": "programming",
+      "meta": "Custom embed builder website",
+      "note": "Made custom for myself",
+      "desc": "This was a one-month long project I started on with a friend a few months ago, making a simplistic discord embed builder site for just us. It has everything we could need, saves, swaps between components v1-v2, .json imports and exports, a custom lock screen, and a custom preview frame. It's highly customisable and user-friendly, very fun project to get working overall.",
+      "tags": [
+        "Discord",
+        "Custom",
+        "Webhook",
+        "Embed",
+        "Integration"
+      ],
+      "link": "",
+      "images": [
+        {
+          "src": "uploads/mv5oorqb1it-image-2026-10-12-210739792.jpg",
+          "caption": ""
+        }
+      ]
+    },
+    {
       "id": "xmv5nyvsxxl8",
       "title": "Simple Vehicle Spawn UI",
       "category": "ui design",
