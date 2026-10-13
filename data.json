@@ -18,7 +18,7 @@
   "projects": [
     {
       "id": "xmv3upx3d01q",
-      "title": "[CUSA] Crimson Raiders Discord Bot",
+      "title": "CUSA Crimson Raiders Discord Bot",
       "category": "programming",
       "meta": "Discord Bot developed in Python for CUSA",
       "note": "Crimson Raiders",
@@ -117,15 +117,20 @@
       "id": "xmv5p7yte6wx",
       "title": "LuaShield Obfuscator",
       "category": "programming",
-      "meta": "",
-      "note": "",
-      "desc": "More information coming soon.",
-      "tags": [],
+      "meta": "Roblox Lua Obfuscator",
+      "note": "Free-to-use",
+      "desc": "This was a several-month long side project I always had in mind - I thought it would be way easier than it was, but there are many issues that pop up with obfuscation. First off, how? How do you obfuscate it? Do you make it harder to read, or impossible to read? I had seen from some friends in the development community a paid service which offered impossible to read obfuscation, which could condense several thousand-line long scripts into one line (albeit LOADS of characters). The easier (much easier) route was obviously to make it hard to read, but I decided to take the hard route like always. It had me set up many things that I'm not going to mention here (may patent in the future 😉) and ended up being several tens of thousands of lines long of code (quite repetitive). It will be available for the public to use soon, along with its free counterpart, a deobfuscator.",
+      "tags": [
+        "Lua",
+        "Development",
+        "Obfuscation",
+        "Free"
+      ],
       "link": "",
       "images": [
         {
           "src": "uploads/mv5p83cd1kq-image-2026-10-12-212241289.jpg",
-          "caption": ""
+          "caption": "Loading Screen for the program."
         }
       ]
     }
