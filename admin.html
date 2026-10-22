@@ -94,7 +94,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.4;stroke
   <h2>Only vx here!</h2>
   <form id="gf"><input id="gi" type="password" autocomplete="off" placeholder="password?" aria-label="password"><button class="b solid" type="submit">go</button></form>
   <div class="err" id="ge"></div>
-  <a class="hint" href="index.html">← back to site</a>
+  <a class="hint" href="home">← back to site</a>
 </div></div>
 
 <div class="wrap" id="app" style="display:none">
@@ -102,7 +102,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.4;stroke
     <h1>manage<span class="cur">_</span></h1>
     <div class="acts">
       <span class="chip" id="chip">saved</span>
-      <a class="b" id="viewsite" href="./" target="_blank">view site ↗</a>
+      <a class="b" id="viewsite" href="home" target="_blank">view site ↗</a>
       <button class="b solid" id="save">save &amp; publish</button>
       <button class="b" id="lockout">lock</button>
     </div>
@@ -138,7 +138,7 @@ $("#gf").addEventListener("submit",async e=>{
 });
 const EMB=window.parent!==window;
 if(EMB){const v=$("#viewsite");v.textContent="back to site";v.removeAttribute("target");v.removeAttribute("href");v.style.cursor="pointer";v.addEventListener("click",()=>parent.postMessage("vx-close",location.origin))}
-$("#lockout").addEventListener("click",()=>{if(EMB)parent.postMessage("vx-lock",location.origin);else{sessionStorage.removeItem("vx_auth");location.href="index.html"}});
+$("#lockout").addEventListener("click",()=>{if(EMB)parent.postMessage("vx-lock",location.origin);else{sessionStorage.removeItem("vx_auth");location.href="home"}});
 
 /* ---------- config / state ---------- */
 const CFG=()=>Object.assign({repo:"VxpeInjected/vx-portfolio",branch:"main",token:""},JSON.parse(localStorage.getItem("vx_cfg")||"{}"));
