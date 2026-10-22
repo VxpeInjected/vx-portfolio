@@ -91,8 +91,8 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.4;stroke
 <body>
 
 <div class="gate" id="gate"><div class="box" id="gbox">
-  <div class="hint">RESTRICTED</div><h2>enter password</h2>
-  <form id="gf"><input id="gi" type="password" autocomplete="off" placeholder="password" aria-label="password"><button class="b solid" type="submit">unlock</button></form>
+  <h2>Only vx here!</h2>
+  <form id="gf"><input id="gi" type="password" autocomplete="off" placeholder="password?" aria-label="password"><button class="b solid" type="submit">go</button></form>
   <div class="err" id="ge"></div>
   <a class="hint" href="index.html">← back to site</a>
 </div></div>
@@ -120,7 +120,7 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.4;stroke
 <div class="toast" id="toast"></div>
 
 <script>
-const HASH="7c85888a75e07664a781b4db1304f5e042217c917b2b620ee6dcf017c603a116";
+const HASH="6cb8947f869a1332785a2c4a673cb8a2529c528a0de18239c4a4594782599b29";
 const $=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=n=>String(n).padStart(2,"0");
@@ -134,7 +134,7 @@ $("#gf").addEventListener("submit",async e=>{
   e.preventDefault();
   if(!(window.crypto&&crypto.subtle)){$("#ge").textContent="needs a secure (https) connection";return}
   if(await sha($("#gi").value)===HASH){sessionStorage.setItem("vx_auth",HASH);enter()}
-  else{$("#ge").textContent="wrong password";$("#gi").value="";const b=$("#gbox");b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake")}
+  else{$("#ge").textContent="nope, try again";$("#gi").value="";const b=$("#gbox");b.classList.remove("shake");void b.offsetWidth;b.classList.add("shake")}
 });
 $("#lockout").addEventListener("click",()=>{sessionStorage.removeItem("vx_auth");location.href="index.html"});
 

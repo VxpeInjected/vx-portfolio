@@ -105,10 +105,10 @@ footer.f{margin-top:96px;padding-top:28px;border-top:1px solid var(--line)}
 .frow{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:9.5px;color:var(--mute);flex-wrap:wrap}
 
 /* lock */
-.lock{position:fixed;right:20px;bottom:20px;z-index:40;width:42px;height:42px;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line);color:var(--mute);font-size:16px;transition:transform .35s var(--ease),color .25s,border-color .25s,box-shadow .35s,background .25s}
-.lock:hover{transform:translateY(-3px);color:#fff;background:var(--ink);border-color:var(--ink);box-shadow:3px 3px 0 var(--faint)}
+.lock{position:fixed;right:14px;bottom:14px;z-index:40;width:30px;height:30px;display:grid;place-items:center;color:var(--faint);opacity:.55;font-size:13px;transition:opacity .3s,color .3s}
+.lock:hover{opacity:1;color:var(--ink)}
 .lock .sh2{transition:transform .35s var(--ease);transform-origin:12px 11px}
-.lock:hover .sh2{transform:translateY(-2px) rotate(-14deg)}
+.lock:hover .sh2{transform:translateY(-1.5px)}
 .modal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;background:rgba(20,20,18,.42);backdrop-filter:blur(7px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
 .modal.open{opacity:1;visibility:visible}
 .dlg{position:relative;width:min(900px,100%);max-height:94vh;overflow:auto;background:#fff;padding:44px 48px 34px;transform:translateY(18px) scale(.97);transition:transform .45s var(--ease)}
@@ -147,8 +147,8 @@ footer.f{margin-top:96px;padding-top:28px;border-top:1px solid var(--line)}
 .mnav button[disabled]{opacity:.3;pointer-events:none}
 
 /* password */
-.pwdlg{width:min(400px,100%);padding:34px 32px 28px}
-.pwdlg h3{font-size:16px;margin-top:14px}
+.pwdlg{width:min(340px,100%);padding:30px 26px 22px;box-shadow:0 18px 50px -22px rgba(0,0,0,.35)}
+.pwdlg h3{font-size:15px;margin-top:0;font-weight:600}
 .pwdlg p{font-size:11px;color:var(--mute);margin-top:6px}
 .pwdlg form{margin-top:20px;display:flex;gap:8px}
 .pwdlg input{flex:1;min-width:0;border:1px solid var(--line);padding:10px 12px;font:inherit;font-size:12px;outline:none;transition:border-color .2s}
@@ -240,10 +240,8 @@ footer.f{margin-top:96px;padding-top:28px;border-top:1px solid var(--line)}
 
 <div class="modal" id="pw"><div class="dlg pwdlg" id="pwd" role="dialog" aria-modal="true">
   <button class="x" id="pwx" aria-label="close"><svg class="i"><use href="#i-x"/></svg></button>
-  <div class="eb">restricted</div>
-  <h3>enter password</h3>
-  <p>Management access only.</p>
-  <form id="pwf"><input id="pwi" type="password" autocomplete="off" placeholder="password" aria-label="password"><button class="go" type="submit">unlock</button></form>
+  <h3>Only vx here!</h3>
+  <form id="pwf"><input id="pwi" type="password" autocomplete="off" placeholder="password?" aria-label="password"><button class="go" type="submit">go</button></form>
   <div class="err" id="pwe"></div>
 </div></div>
 
@@ -394,7 +392,7 @@ $("#pwf").addEventListener("submit",async e=>{
   if(!(window.crypto&&crypto.subtle)){$("#pwe").textContent="needs a secure (https) connection";return}
   const h=await sha($("#pwi").value);
   if(h===HASH){sessionStorage.setItem("vx_auth",HASH);location.href="admin.html"}
-  else{$("#pwe").textContent="wrong password";$("#pwi").value="";const d=$("#pwd");d.classList.remove("shake");void d.offsetWidth;d.classList.add("shake")}
+  else{$("#pwe").textContent="nope, try again";$("#pwi").value="";const d=$("#pwd");d.classList.remove("shake");void d.offsetWidth;d.classList.add("shake")}
 });
 addEventListener("keydown",e=>{
   if(e.key==="Escape"){closeM();closePw()}
