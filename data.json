@@ -133,6 +133,47 @@
           "caption": "Loading Screen for the program. More images on release."
         }
       ]
+    },
+    {
+      "id": "xmvjxkn0z7q7",
+      "title": "coldd.dev Website",
+      "category": "programming",
+      "meta": "Full E-Commerce Site",
+      "note": "Coldd Game Development",
+      "desc": "I built this site alongside a team of 3 other developers, taking us months. It has a custom ordering system which accepts card, crypto, paypal and robux - it has a full sign in and account creation system with emails that are sent to the user, along with other related features such as password and account recovery. It has a full blog posting area as well as a custom gifting system. It has a complex referral system (where you get paid for referring other friends to buy products), a fully custom robux purchasing system where when you place an order a bot will create a gamepass with the price in under 10 seconds and give you the gamepass to order with, and once purchased it will check your username for eligibility. The site also comes with a custom USD/Robux switcher in the top left along with a cart viewer, although the currency can be switched from any UN-recognized currency rather than just being USD (e.g., AUD, GBP, EUR, JPY). It has a custom product searching page where the user can filter via things like price, category, free products, on-sale products, recommended products, and many more. It also comes with an account creation and management system, where you can manage things in your personal dashboard such as your current licenses, your wishlist and referrals, your purchase history, account settings, and more! You can currently link your account to Google, Roblox & Discord - although we are looking into more ways soon. The site has a custom notification system, where you get notified whenever there is an ongoing sale or you are eligible for a free product, or after you buy a product. Along the sidebar, there is a cart with an automatic discount depending on how much you've spent. Back on checkout, there are also discounts available for staff and other important members you can apply via discount codes. There is a fully custom review system, an email marketing system, a bundle and weekly deal system, an FAQ page, and a lot more legal pages for our legal team. There is also an admin panel I could go on about for ages (you can see a little sneak peek in the \"Statistics Page\" image), but can't share too much of that (including a massive product upload system, more complex than it sounds).",
+      "tags": [
+        "Development",
+        "Website",
+        "E-Commerce",
+        "Custom"
+      ],
+      "link": "",
+      "images": [
+        {
+          "src": "uploads/mvjxosuq7od-screenshot-2026-10-22-202726.jpg",
+          "caption": "Home Page"
+        },
+        {
+          "src": "uploads/mvjxwgm6kwx-screenshot-2026-10-22-203333.jpg",
+          "caption": "Product Search Page"
+        },
+        {
+          "src": "uploads/mvjxylagzg6-screenshot-2026-10-22-203536.jpg",
+          "caption": "Account Management Page"
+        },
+        {
+          "src": "uploads/mvjy6mn19nt-screenshot-2026-10-22-204202.jpg",
+          "caption": "Login Page"
+        },
+        {
+          "src": "uploads/mvjy7q8msqc-screenshot-2026-10-22-204257.jpg",
+          "caption": "Password Reset Page"
+        },
+        {
+          "src": "uploads/mvjy33xh6wf-screenshot-2026-10-22-203920.jpg",
+          "caption": "Cart Sidebar"
+        }
+      ]
     }
   ],
   "toolkit": [
